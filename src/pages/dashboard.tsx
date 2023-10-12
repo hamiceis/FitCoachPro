@@ -1,6 +1,8 @@
 
-export function Dashboard() {
+export function DashboardPage() {
   return (
-    <div>Dashboard</div>
+    <div>
+      <h1>Dashboaord</h1>
+    </div>
   )
 }
