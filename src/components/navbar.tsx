@@ -26,7 +26,7 @@ export function Navbar() {
         ))}
       </ul>
       <Link
-        to="/dashboard"
+        to="/login"
         className="text-lg ml-10 flex items-center gap-1 font-medium py-2 px-4 bg-primary rounded-full  hover:bg-primary/50 transition-colors"
       >
         Acessar
