@@ -36,7 +36,7 @@ export function Home() {
             target="_blank"
           >
             Duvidas entre em contato
-            <Phone size={20} />
+            <Phone size={24} />
           </a>
         </div>
       </main>
