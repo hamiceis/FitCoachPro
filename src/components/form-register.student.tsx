@@ -10,9 +10,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { Separator } from "./ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -22,25 +22,19 @@ const formSchema = z.object({
     message: "Nome é Obrigátorio",
   }),
   email: z.string().email({
-    message: "Email é obrigátorio",
+    message: "Email é obrigatório",
   }),
   password: z.string().min(8, {
     message: "Senha deve conter no mínimo 8 caracteres",
   }),
-  age: z
-    .string()
-    .min(1, {
-      message: "Idade é obrigátoria",
-    })
-    .transform((age) => parseInt(age)),
+  age: z.number().min(1, {
+    message: "Idade é obrigatória",
+  }),
   tel: z.string().optional(),
   gender: z.string().optional(),
-  height: z
-    .string()
-    .min(1, {
-      message: "Você precisa informar sua altura",
-    })
-    .transform((height) => parseInt(height)),
+  height: z.number().min(1, {
+    message: "Você precisa informar sua altura",
+  }),
 });
 
 export function FormRegister() {
@@ -57,8 +51,11 @@ export function FormRegister() {
     },
   });
 
+  const isLoading = form.formState.isSubmitting;
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    form.reset();
   };
 
   return (
@@ -69,6 +66,7 @@ export function FormRegister() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <Button
+            variant="ghost"
             type="button"
             className="w-10 absolute -top-1 rounded-full"
           >
@@ -87,6 +85,7 @@ export function FormRegister() {
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       placeholder="Digite seu nome"
                       {...field}
@@ -104,6 +103,7 @@ export function FormRegister() {
                   <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       type="email"
                       autoComplete="username"
@@ -123,6 +123,7 @@ export function FormRegister() {
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       autoComplete="current-password"
                       type="password"
@@ -144,6 +145,7 @@ export function FormRegister() {
                   <FormLabel>Idade</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       maxLength={2}
                       min={18}
@@ -164,6 +166,7 @@ export function FormRegister() {
                   <FormLabel>Telefone</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       placeholder="Whatsapp (Opicional)"
                       {...field}
@@ -181,6 +184,7 @@ export function FormRegister() {
                   <FormLabel>Gênero</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       placeholder="M/F"
                       maxLength={1}
@@ -200,6 +204,7 @@ export function FormRegister() {
                   <FormLabel>Altura</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isLoading}
                       className="border border-zinc-500"
                       maxLength={3}
                       placeholder="Altura em cm: 155"

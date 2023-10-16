@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import { FormRegister } from "@/components/formRegister";
-import { FormLogin } from '@/components/formLogin';
+// import { FormRegister } from "@/components/form-register.student";
+import { FormLogin } from '@/components/form-login';
+import { FormRegisterTeacher } from '@/components/form-register.teacher';
 
 export function LayoutLogin() {
   const location = useLocation()
@@ -19,7 +20,7 @@ export function LayoutLogin() {
 
         <section className="py-4 px-2 bg-zinc-800 rounded-r-lg">
          {pathName === "/register" ? (
-          <FormRegister />
+          <FormRegisterTeacher />
          ): (
           <FormLogin />
          )}
