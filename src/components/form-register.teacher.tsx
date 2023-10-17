@@ -70,8 +70,8 @@ export function FormRegisterTeacher() {
   return (
     <div className="p-4 space-y-2 max-w-xl mx-auto relative rounded-3xl">
       <Form {...form}>
-        <h3 className="text-center font-bold text-xl leading-tight">
-          Formulário de Professor
+        <h3 className="text-lg font-medium text-center">
+          Formulário
         </h3>
         <Button variant="ghost" className="absolute top-1 rounded-full w-10">
           <Link to="/">

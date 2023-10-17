@@ -59,7 +59,7 @@ export function FormRegister() {
   };
 
   return (
-    <div className="h-full p-4 space-y-2 max-w-xl">
+    <div className="h-full space-y-2 max-w-xl">
       <Form {...form}>
         <form
           className="space-y-4 w-full relative"
@@ -74,7 +74,7 @@ export function FormRegister() {
               <ArrowLeft />
             </Link>
           </Button>
-          <h3 className="text-lg font-medium text-center">Formulário Aluno</h3>
+          <h3 className="text-lg font-medium text-center">Formulário</h3>
           <Separator className="bg-zinc-100" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField

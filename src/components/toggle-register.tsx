@@ -1,20 +1,25 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { FormRegister } from "./form-register.student";
+import { FormRegisterTeacher } from "./form-register.teacher";
 
 export function ToggleRegister() {
   return (
-    <>
-      <Tabs defaultValue="Student" className="w-96">
-        <TabsList>
-          <TabsTrigger value="Student">Student</TabsTrigger>
-          <TabsTrigger value="Teacher">Teacher</TabsTrigger>
+    <div className="w-full p-4">
+      <Tabs
+        defaultValue="student"
+        className="flex flex-col justify-center"
+      >
+        <TabsList className="w-48 self-center border border-zinc-100">
+          <TabsTrigger value="student">{`Aluno(a)`}</TabsTrigger>
+          <TabsTrigger value="teacher">{`Professor(a)`}</TabsTrigger>
         </TabsList>
-        <TabsContent value="Student">
-         Criar conta como aluno
+        <TabsContent value="student">
+          <FormRegister />
         </TabsContent>
-        <TabsContent value="Teacher">
-          Criar conta como professor 
-          </TabsContent>
+        <TabsContent value="teacher">
+          <FormRegisterTeacher />
+        </TabsContent>
       </Tabs>
-    </>
+    </div>
   );
 }

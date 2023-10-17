@@ -1,12 +1,12 @@
-import { useLocation } from 'react-router-dom';
-// import { FormRegister } from "@/components/form-register.student";
-import { FormLogin } from '@/components/form-login';
-import { FormRegisterTeacher } from '@/components/form-register.teacher';
+import { useLocation } from "react-router-dom";
+import { FormLogin } from "@/components/form-login";
+
+import { ToggleRegister } from "@/components/toggle-register";
 
 export function LayoutLogin() {
-  const location = useLocation()
-  const pathName = location.pathname
- 
+  const location = useLocation();
+  const pathName = location.pathname;
+
   return (
     <div className="min-h-screen grid place-content-center">
       <main className="h-full mx-2 my-2 min-w-70 md:grid md:grid-cols-2 flex flex-col">
@@ -19,11 +19,11 @@ export function LayoutLogin() {
         </section>
 
         <section className="py-4 px-2 bg-zinc-800 rounded-r-lg">
-         {pathName === "/register" ? (
-          <FormRegisterTeacher />
-         ): (
-          <FormLogin />
-         )}
+          {pathName === "/register" ? (
+            <ToggleRegister />
+          ) : (
+            <FormLogin />
+          )}
         </section>
       </main>
     </div>
