@@ -8,9 +8,12 @@ export function RouterMain() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/register" element={<LayoutLogin />} />
-      <Route path="/login" element={<LayoutLogin />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="register" element={<LayoutLogin />} />
+      <Route path="login" element={<LayoutLogin />} />
+      <Route path="dashboard" element={<DashboardPage />}>
+        <Route index element={<h1>Hello World</h1>} />
+        <Route path="stats" element={<h1>Stats</h1>} />
+       </Route> 
       <Route
         path="*"
         element={
