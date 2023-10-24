@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { Routes, Route, Link } from "react-router-dom";
 import { Home } from "@/pages";
 import { DashboardPage } from "@/pages/dashboard";
 import { LayoutLogin } from "@/pages/login";
-import { Routes, Route, Link } from "react-router-dom";
+
+import { Dashboard } from "@/components/dashboard"
 
 export function RouterMain() {
   return (
@@ -11,8 +13,8 @@ export function RouterMain() {
       <Route path="register" element={<LayoutLogin />} />
       <Route path="login" element={<LayoutLogin />} />
       <Route path="dashboard" element={<DashboardPage />}>
-        <Route index element={<h1>Hello World</h1>} />
-        <Route path="stats" element={<h1>Stats</h1>} />
+        <Route index element={<Dashboard />} />
+        <Route path="students" element={<h1>Alunos</h1>} />
        </Route> 
       <Route
         path="*"

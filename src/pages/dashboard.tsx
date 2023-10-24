@@ -1,8 +1,7 @@
-import { MobileSidebar } from "@/components/mobile-sidebar";
+import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
 
 import { Outlet } from "react-router-dom";
-
 
 export function DashboardPage() {
   return (
@@ -10,10 +9,10 @@ export function DashboardPage() {
       <div className="hidden md:flex md:w-72 md:flex-col bg-gray-900">
         <Sidebar />
       </div>
-      <div className="bg-zinc-600 w-full md:py-0 p-4">
-        <MobileSidebar />
-        <Outlet />
+      <div className="bg-zinc-600 w-full md:py-0 p-4">  
+        <Header />
+        <Outlet  />
       </div>
     </div>
-  )
+  );
 }

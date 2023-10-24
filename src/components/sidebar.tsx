@@ -1,4 +1,4 @@
-import { Dumbbell, Home,  User2 } from "lucide-react"
+import { Dumbbell, Home,  User2, Mail } from "lucide-react"
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -11,15 +11,19 @@ const routes = [
   },
   {
     icon: User2,
-    href: '/students',
+    href: '/dashboard/students',
     label: "Alunos",
   },
   {
     icon: Dumbbell,
-    href: "/workout",
+    href: "/dashboard/workout",
     label: "Treinos"
   },
-  
+  {
+    icon: Mail,
+    href: "/dashboard/invite",
+    label: "Convidar"
+  },
 ];
 
 
@@ -57,6 +61,10 @@ export function Sidebar(){
             </Link>
           ))}
         </div>
+      </div>
+      <div className="text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition">
+        <User2 className={cn("h-5 w-5 mr-3")} />
+        Profile
       </div>
     </div>
   )
