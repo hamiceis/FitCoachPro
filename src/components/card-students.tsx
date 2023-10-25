@@ -10,7 +10,7 @@ export function CardStudent() {
       </div>
 
       <div className="flex items-center gap-2">
-        <Link to={`/student`}>
+        <Link to={`/student/hamiceis`}>
           <Button variant="secondary">Ficha</Button>
         </Link>
         <Link to={"/workout"}>

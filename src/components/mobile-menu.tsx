@@ -23,7 +23,7 @@ export function MobileMenu() {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="p-0">
-        <ul className="h-fit w-56 lg:w-full text-center absolute lg:relative inset-y-0 lg:bg-transparent right-0 top-24 lg:top-0 space-y-4 lg:space-y-0 px-4 lg:px-0 py-6 lg:py-0 rounded-b-lg lg:rounded-none lg:flex gap-6">
+        <ul className="h-fit w-72 lg:w-full text-center absolute lg:relative inset-y-0 lg:bg-transparent right-0 top-24 lg:top-0 space-y-4 lg:space-y-0 px-4 lg:px-0 py-6 lg:py-0 rounded-b-lg lg:rounded-none lg:flex gap-6">
           {navData.map((item) => (
             <li
               key={item}

@@ -11,7 +11,7 @@ export function MobileSidebar(){
           <Menu />
        </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="p-0 w-max">
+      <SheetContent side="left" className="p-0 w-72">
         <Sidebar />
       </SheetContent>
     </Sheet>

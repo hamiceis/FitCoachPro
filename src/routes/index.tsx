@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Routes, Route, Link } from "react-router-dom";
+
 import { Home } from "@/pages";
 import { DashboardPage } from "@/pages/dashboard";
 import { LayoutLogin } from "@/pages/login";
+import { StudentPage } from "@/pages/student";
 
-import { Dashboard } from "@/components/dashboard"
+import { Button } from "@/components/ui/button";
+import { Dashboard } from "@/components/dashboard";
 
 export function RouterMain() {
   return (
@@ -15,7 +17,11 @@ export function RouterMain() {
       <Route path="dashboard" element={<DashboardPage />}>
         <Route index element={<Dashboard />} />
         <Route path="students" element={<h1>Alunos</h1>} />
-       </Route> 
+        <Route path="workouts" element={<h1>Treinos</h1>} />
+        <Route path="invite" element={<h1>Convidar aluno</h1>} />
+        <Route path="profile" element={<h1>Perfil de usuário</h1>} />
+      </Route>
+      <Route path="student/:id" element={<StudentPage />} />
       <Route
         path="*"
         element={

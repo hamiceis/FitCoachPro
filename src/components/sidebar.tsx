@@ -15,7 +15,7 @@ const routes = [
   },
   {
     icon: Dumbbell,
-    href: "/dashboard/workout",
+    href: "/dashboard/workouts",
     label: "Treinos",
   },
   {
@@ -61,8 +61,11 @@ export function Sidebar() {
       </div>
 
       <Link
-        to="/profile"
-        className="text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition"
+        to="/dashboard/profile"
+        className={cn(
+          "text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+          pathname === "/profile" ? "text-white bg-white/10" : "text-zinc-400"
+        )}
       >
         <User2 className={cn("h-5 w-5 mr-3")} />
         Profile
