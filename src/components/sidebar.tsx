@@ -1,35 +1,33 @@
-import { Dumbbell, Home,  User2, Mail } from "lucide-react"
+import { Dumbbell, Home, User2, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-
 
 const routes = [
   {
     icon: Home,
-    href: '/dashboard',
+    href: "/dashboard",
     label: "Home",
   },
   {
     icon: User2,
-    href: '/dashboard/students',
+    href: "/dashboard/students",
     label: "Alunos",
   },
   {
     icon: Dumbbell,
     href: "/dashboard/workout",
-    label: "Treinos"
+    label: "Treinos",
   },
   {
     icon: Mail,
     href: "/dashboard/invite",
-    label: "Convidar"
+    label: "Convidar",
   },
 ];
 
-
-export function Sidebar(){
-  const location = useLocation()
-  const pathname = location.pathname
+export function Sidebar() {
+  const location = useLocation();
+  const pathname = location.pathname;
 
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
@@ -37,35 +35,38 @@ export function Sidebar(){
         <Link to="/" className="flex items-center justify-center mb-10 mt-4">
           <h1 className="text-2xl font-medium">
             FitCoach
-            <span className="font-bold text-primary">
-              PRO
-            </span>
+            <span className="font-bold text-primary">PRO</span>
           </h1>
         </Link>
-      
+
         <div className="space-y-1">
           {routes.map((route) => (
-            <Link key={route.href}
-            to={route.href}
-            className={cn(
-              "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-              pathname === route.href ? "text-white bg-white/10" : "text-zinc-400",
-            )}
+            <Link
+              key={route.href}
+              to={route.href}
+              className={cn(
+                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                pathname === route.href
+                  ? "text-white bg-white/10"
+                  : "text-zinc-400"
+              )}
             >
-            <div className="flex items-center flex-1">
-              <route.icon
-              className={cn("h-5 w-5 mr-3")} 
-              />
-              {route.label}
-            </div>
+              <div className="flex items-center flex-1">
+                <route.icon className={cn("h-5 w-5 mr-3")} />
+                {route.label}
+              </div>
             </Link>
           ))}
         </div>
       </div>
-      <div className="text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition">
+
+      <Link
+        to="/profile"
+        className="text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition"
+      >
         <User2 className={cn("h-5 w-5 mr-3")} />
         Profile
-      </div>
+      </Link>
     </div>
-  )
+  );
 }
