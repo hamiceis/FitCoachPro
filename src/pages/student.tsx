@@ -3,18 +3,8 @@ import { Button } from "@/components/ui/button";
 import { StudentSidebar } from "@/components/student-sidebar";
 import { HeaderStudent } from "@/components/header-student";
 import { arr } from "@/lib/datafake"
+import { WorkoutCard } from "@/components/workout-card";
 
-let data = arr
-
-const weekdays = [
-  "Domingo",
-  "Segunda",
-  "Terça",
-  "Quarta",
-  "Quinta",
-  "Sexta",
-  "Sábado",
-];
 
 export function StudentPage() {
   const { id } = useParams();
@@ -41,24 +31,9 @@ export function StudentPage() {
         </div>
 
         <div className="h-max mt-6 grid grid-cols-7 grid-flow-row">
-          {data.length === 0 ? (
-            <h1 className="text-center font-bold"> Não existem treinos</h1>
-          ) : (
-            arr.map((item, i) => (
-              <div
-                key={i}
-                className="p-2 border border-zinc-100 hover:bg-zinc-900 cursor-pointer transition-colors"
-              >
-                <div className="text-center font-light text-xs md:text-base">
-                  {i + 1} - {weekdays[item.week_day] ?? ""}
-                </div>
-                <div className="text-center font-extrabold">
-                  <span className="text-primary font-semibold">Tipo: </span>{" "}
-                  {item.type ?? ""}
-                </div>
-              </div>
-            ))
-          )}
+          {arr.map((workout, i) => (
+            <WorkoutCard data={workout} index={i} key={workout.id} />
+          ))}
         </div>
       </main>
     </div>

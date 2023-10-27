@@ -8,9 +8,9 @@ interface StatsInfoProps {
 
 export function StatsInfo({ span, info, className }: StatsInfoProps) {
   return (
-    <div className="flex gap-2">
-      <span className="text-red-500">{span}:</span>
-      <h2 className={cn("italic font-bold text-lg", className)}>{info}</h2>
+    <div className="flex items-center gap-2">
+      <span className="text-red-500 text-xs ">{span}:</span>
+      <h2 className={cn("italic font-medium text-xs md:text-base", className)}>{info}</h2>
     </div>
   );
 }
