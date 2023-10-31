@@ -4,6 +4,9 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { exercisesProps } from "@/lib/datafake";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Pencil, Trash2 } from "lucide-react";
 
 interface WorkoutCardProps {
   data: {
@@ -38,15 +41,27 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
           </div>
 
           <div className="text-center font-extrabold">
-            <span className="text-primary font-semibold">Tipo: {data.type}</span>
+            <span className="text-primary font-semibold">
+              Tipo: {data.type}
+            </span>
           </div>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
-        {data?.exercises.map(exercise => (
-          <div 
-          className="p-2 flex flex-col gap-1 border border-zinc-100"
-          key={exercise.id}>
+      <PopoverContent className="w-80 p-2">
+        {data?.exercises.map((exercise) => (
+          <div
+            className="p-2 flex flex-col gap-1 border border-zinc-100"
+            key={exercise.id}
+          >
+            <div className="flex items-center justify-between p-1">
+              <Button className="p-3">
+                <Pencil size={16} />
+              </Button>
+              <Button className="p-3">
+                <Trash2 size={16} />
+              </Button>
+            </div>
+            <Separator className="bg-zinc-100" />
             <span>Exercicio: {exercise.name}</span>
             <span>Repetições: {exercise.reps}</span>
             <span>Sets: {exercise.sets}</span>
