@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { CardStudent } from "./card-students";
+import { ScrollArea } from "./ui/scroll-area";
 
 
 
@@ -13,17 +14,21 @@ export function Dashboard() {
         placeholder="Digite o nome do aluno.. 🔍" />
       </div>
 
-      <div className="h-[26.5rem] md:h-[27.5rem] flex flex-col space-y-4 overflow-y-auto">
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-        <CardStudent />
-      </div>
+      
+        <ScrollArea className="h-[26.5rem] md:h-[27.5rem]">
+          <div className="flex flex-col space-y-4">
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          <CardStudent />
+          </div>
+        </ScrollArea>
+      
     </div>
   )
 }
