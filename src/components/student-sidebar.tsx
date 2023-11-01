@@ -10,7 +10,7 @@ interface StudentSidebarProps {
 export function StudentSidebar({ children }: StudentSidebarProps) {
   return (
     <Sheet>
-      <SheetTrigger className="relative top-12 left-5 z-50" asChild>
+      <SheetTrigger className="relative top-14 left-5 z-50" asChild>
         <Button variant="secondary" size="icon" className="md:hidden">
           <Menu />
         </Button>

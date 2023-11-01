@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CalendarIcon } from "lucide-react";
 
+import { toast } from "react-toastify"
+
 import {
   Dialog,
   DialogTrigger,
@@ -99,6 +101,7 @@ export function FormWorkout() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     form.reset();
+    toast.success("Treino criado com sucesso")
   };
 
   return (
