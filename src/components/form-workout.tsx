@@ -41,6 +41,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
+import { useState } from "react";
+
 
 const formSchema = z.object({
   type: z.string().min(1, {
@@ -82,6 +84,8 @@ const weekDays = {
 };
 
 export function FormWorkout() {
+  const [modalOpen, setModalOpen] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -102,10 +106,11 @@ export function FormWorkout() {
     console.log(values);
     form.reset();
     toast.success("Treino criado com sucesso")
-  };
+    setModalOpen(false)
+  }
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={setModalOpen} open={modalOpen}>
       <DialogTrigger asChild className="text-xs md:text-sm absolute right-0">
         <Button variant="secondary">Novo treino</Button>
       </DialogTrigger>

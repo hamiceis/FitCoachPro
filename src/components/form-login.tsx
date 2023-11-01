@@ -106,8 +106,8 @@ export function FormLogin() {
       </Form>
 
       <div className="mt-10 flex justify-center">
-        <Link to="/register">
-          Register <span className="text-base text-red-500">Account</span>
+        <Link to="/register" className="flex items-center gap-1">
+          Não possui uma conta? <span className="text-base text-red-500"> Criar agora</span>
         </Link>
       </div>
     </div>
