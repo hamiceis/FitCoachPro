@@ -13,7 +13,7 @@ export function Dashboard() {
         placeholder="Digite o nome do aluno.. 🔍" />
       </div>
 
-      <div className="h-[28rem] md:h-[30rem] flex flex-col space-y-4 overflow-y-auto">
+      <div className="h-[26.5rem] md:h-[27.5rem] flex flex-col space-y-4 overflow-y-auto">
         <CardStudent />
         <CardStudent />
         <CardStudent />

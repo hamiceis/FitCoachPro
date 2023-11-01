@@ -107,7 +107,7 @@ export function FormWorkout() {
         <Button variant="secondary">Novo treino</Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-[490px] h-full md:min-w-[600px] overflow-y-scroll">
+      <DialogContent className="max-w-[600px] h-full  overflow-y-scroll">
         <DialogHeader>
           <DialogTitle className="text-center">Novo treino</DialogTitle>
         </DialogHeader>
@@ -124,7 +124,7 @@ export function FormWorkout() {
                   </h3>
                 </div>
 
-                <Separator className="bg-zinc-100 w-full" />
+                <Separator className="bg-zinc-100/10 w-full" />
                 <div className="flex flex-col md:flex-row md:justify-center items-center gap-4 md:gap-10">
                   <FormField
                     control={form.control}
@@ -334,7 +334,7 @@ export function FormWorkout() {
                   )}
                 />
               </div>
-              <Separator className="bg-zinc-100 w-full" />
+              <Separator className="bg-zinc-100/10 w-full" />
               <Button type="submit" className="w-full">
               Criar
             </Button>
