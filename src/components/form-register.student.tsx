@@ -75,7 +75,7 @@ export function FormRegister() {
             </Link>
           </Button>
           <h3 className="text-lg font-medium text-center">Formulário</h3>
-          <Separator className="bg-zinc-100" />
+          <Separator className="bg-zinc-100/10" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               name="name"
@@ -215,7 +215,7 @@ export function FormRegister() {
               )}
             />
           </div>
-          <Separator className="bg-zinc-200" />
+          <Separator className="bg-zinc-100/10" />
           <Button type="submit" className="w-full">
             Cadastrar
           </Button>
