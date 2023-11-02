@@ -87,7 +87,7 @@ export function FormExercise({ children, actionType }: FormExerciseProps) {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     form.reset();
-    toast.success("Exercicio criado com sucesso");
+    toast.success("Exercicio Atualizado");
     setModalOpen(false);
   };
 
