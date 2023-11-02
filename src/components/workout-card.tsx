@@ -9,8 +9,6 @@ import { Separator } from "@/components/ui/separator";
 import { Pencil, Trash2 } from "lucide-react";
 import { FormExercise } from "./form-exercise";
 
-
-
 interface WorkoutCardProps {
   data: {
     id: string;
@@ -34,7 +32,6 @@ const weekdays = [
 ];
 
 export function WorkoutCard({ data, index }: WorkoutCardProps) {
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -59,12 +56,12 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             key={exercise.id}
           >
             <div className="flex items-center justify-between p-1">
-                  <FormExercise actionType="Edit">
-                    <Button className="p-3">
-                      <Pencil size={16} />
-                    </Button>
-                  </FormExercise>
-           
+              <FormExercise actionType="Edit">
+                <Button className="p-3">
+                  <Pencil size={16} />
+                </Button>
+              </FormExercise>
+
               <Button className="p-3">
                 <Trash2 size={16} />
               </Button>

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 import {
   Dialog,
@@ -28,7 +28,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ReactNode, useState } from "react";
 
-
 const formSchema = z.object({
   exerciseName: z.string().min(1, {
     message: "Escreva o nome do exercício",
@@ -49,41 +48,53 @@ const formSchema = z.object({
   observation: z.string().optional(),
 });
 
-type ActionTypeProps = "Create" | "Edit"
+type ActionTypeProps = "Create" | "Edit";
 
 interface FormExerciseProps {
-  children?: ReactNode
-  actionType?: ActionTypeProps
+  children?: ReactNode;
+  actionType?: ActionTypeProps;
 }
 
+const initialForm = {
+  exerciseName: "",
+  repetitions: "",
+  interval: "",
+  method: "",
+  load: "",
+  cadence: "",
+  observation: "",
+};
+
 export function FormExercise({ children, actionType }: FormExerciseProps) {
-  const [modalOpen, setModalOpen] = useState(false)
-  const isEditing = actionType === "Edit"
+  const [modalOpen, setModalOpen] = useState(false);
+  const isEditing = actionType === "Edit";
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      exerciseName: "",
-      repetitions: "",
-      interval: "",
-      method: "",
-      load: "",
-      cadence: "",
-      observation: "",
-    },
+    defaultValues: isEditing
+      ? {
+          exerciseName: "Remada baixa",
+          repetitions: "4x20",
+          interval: "30s",
+          method: "dropset",
+          load: "leve",
+          cadence: "Fast",
+          observation: "Nenhuma observação",
+        }
+      : initialForm,
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     form.reset();
-    toast.success("Exercicio criado com sucesso")
-    setModalOpen(false)
-  }
+    toast.success("Exercicio criado com sucesso");
+    setModalOpen(false);
+  };
 
   return (
     <Dialog onOpenChange={setModalOpen} open={modalOpen}>
       <DialogTrigger asChild className="text-xs md:text-sm">
-          {children}   
+        {children}
       </DialogTrigger>
 
       <DialogContent className="max-w-[600px] h-full md:h-max">
@@ -100,9 +111,8 @@ export function FormExercise({ children, actionType }: FormExerciseProps) {
                 className="space-y-4 pb-10"
               >
                 <div className="space-y-4">
-                
                   <Separator className="bg-zinc-100/10 w-full" />
-               
+
                   <FormField
                     control={form.control}
                     name="exerciseName"
@@ -119,7 +129,6 @@ export function FormExercise({ children, actionType }: FormExerciseProps) {
                       </FormItem>
                     )}
                   />
-                  
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
