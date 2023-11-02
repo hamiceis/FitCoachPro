@@ -25,7 +25,7 @@ export function StudentPage() {
           <FormWorkout />
         </div>
 
-        <div className="h-max mt-6 grid grid-cols-7 grid-flow-row">
+        <div className="h-max mt-6 grid grid-cols-4 md:grid-cols-7 grid-flow-row">
           {arr.map((workout, i) => (
             <WorkoutCard data={workout} index={i} key={workout.id + i} />
           ))}

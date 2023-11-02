@@ -7,6 +7,9 @@ import { exercisesProps } from "@/lib/datafake";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Pencil, Trash2 } from "lucide-react";
+import { FormExercise } from "./form-exercise";
+
+
 
 interface WorkoutCardProps {
   data: {
@@ -31,6 +34,7 @@ const weekdays = [
 ];
 
 export function WorkoutCard({ data, index }: WorkoutCardProps) {
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -47,6 +51,7 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
           </div>
         </div>
       </PopoverTrigger>
+
       <PopoverContent className="w-80 p-2">
         {data?.exercises.map((exercise) => (
           <div
@@ -54,9 +59,12 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             key={exercise.id}
           >
             <div className="flex items-center justify-between p-1">
-              <Button className="p-3">
-                <Pencil size={16} />
-              </Button>
+                  <FormExercise actionType="Edit">
+                    <Button className="p-3">
+                      <Pencil size={16} />
+                    </Button>
+                  </FormExercise>
+           
               <Button className="p-3">
                 <Trash2 size={16} />
               </Button>
