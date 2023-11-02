@@ -6,7 +6,7 @@ import {
 import { exercisesProps } from "@/lib/datafake";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Plus } from "lucide-react";
 import { FormExercise } from "./form-exercise";
 
 interface WorkoutCardProps {
@@ -49,7 +49,7 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="w-80 p-2">
+      <PopoverContent className="w-80 px-2 py-2">
         {data?.exercises.map((exercise) => (
           <div
             className="p-2 flex flex-col gap-1 border border-zinc-100"
@@ -72,6 +72,14 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             <span>Sets: {exercise.sets}</span>
           </div>
         ))}
+        <div className="w-full mt-2">
+          <FormExercise actionType="Create">
+            <Button className="w-full flex gap-4">
+              <Plus />
+              Adicionar Exercício
+            </Button>
+          </FormExercise>
+        </div>
       </PopoverContent>
     </Popover>
   );
