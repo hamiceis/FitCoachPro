@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { StudentSidebar } from "@/components/student-sidebar";
-import { HeaderStudent } from "@/components/header-student";
 import { arr } from "@/lib/datafake"
+import { HeaderStudent } from "@/components/header-student";
 import { WorkoutCard } from "@/components/workout-card";
 import { FormWorkout } from "@/components/form-workout";
 

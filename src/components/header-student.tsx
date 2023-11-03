@@ -11,9 +11,9 @@ export function HeaderStudent({ id }: { id?: string }) {
     <Button
       variant="ghost"
       onClick={() => navigate(-1)}
-      className="absolute top-4 left-2 bg-zinc-800 rounded-full p-2 hover:bg-zinc-700"
+      className="absolute top-4 left-2 bg-secondary/10 rounded-full p-2 hover:bg-secondary"
     >
-      <ArrowLeft size={24} />
+      <ArrowLeft size={20} />
     </Button>
 
     <div className="md:ml-10 lg:ml-0">

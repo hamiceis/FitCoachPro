@@ -30,7 +30,7 @@ export function Sidebar() {
   const pathname = location.pathname;
 
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
+    <div className="space-y-4 py-4 flex flex-col h-full bg-background_secondary text-white">
       <div className="px-3 py-2 flex-1">
         <Link to="/" className="flex items-center justify-center mb-10 mt-4">
           <h1 className="text-2xl font-medium">
