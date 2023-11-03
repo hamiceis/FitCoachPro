@@ -52,10 +52,10 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
       <PopoverContent className="w-80 px-2 py-2">
         {data?.exercises.map((exercise) => (
           <div
-            className="p-2 flex flex-col gap-1 border border-zinc-100"
+            className="px-2 pt-1 flex flex-col gap-1 border border-zinc-100"
             key={exercise.id}
           >
-            <div className="flex items-center justify-between p-1">
+            <div className="flex items-center justify-between">
               <FormExercise actionType="Edit">
                 <Button className="p-3">
                   <Pencil size={16} />
