@@ -15,7 +15,7 @@ export function RouterMain() {
       <Route path="/" element={<Home />} />
       <Route path="register" element={<LayoutLogin />} />
       <Route path="login" element={<LayoutLogin />} />
-      <Route path="workout" element={<Workout />} />
+      <Route path="workout/:id" element={<Workout />} />
       <Route path="dashboard" element={<DashboardPage />}>
         <Route index element={<Dashboard />} />
         <Route path="students" element={<h1>Alunos</h1>} />
