@@ -1,10 +1,18 @@
+import { useState } from "react"
 import { StatsInfo } from "./stats-info";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom"
 
+type Sex = "man" | "woman"
+
 export function HeaderStudent({ id }: { id?: string }) {
+  const [sex, setSex] = useState<Sex>("man")
+
+  const imageSrc = sex === "woman" ? "/woman-vetor.jpg" :  "/man-vetor.jpg"
+
   const navigate = useNavigate()
+
 
   return (
     <header className="relative h-max md:h-max w-full px-10 py-5 flex items-center justify-center md:gap-32 gap-36 bg-black">
@@ -18,8 +26,8 @@ export function HeaderStudent({ id }: { id?: string }) {
 
     <div className="md:ml-10 lg:ml-0">
       <img
-        className="rounded-full w-20 h-20 border border-red-500"
-        src="/profile.jpg"
+        className="rounded-full w-20 h-20 border border-zinc-100"
+        src={imageSrc}
         alt="foto aleatoria"
       />
     </div>

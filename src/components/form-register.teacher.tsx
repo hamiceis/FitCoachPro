@@ -94,6 +94,7 @@ export function FormRegisterTeacher() {
                   <FormControl>
                     <Input
                       disabled={isLoading}
+                      autoComplete="username"
                       placeholder="Digite seu nome completo"
                       {...field}
                       className="border border-zinc-500"
@@ -113,6 +114,7 @@ export function FormRegisterTeacher() {
                     <Input
                       disabled={isLoading}
                       type="email"
+                      autoComplete="email"
                       placeholder="Digite seu email"
                       {...field}
                       className="border border-zinc-500"
@@ -131,6 +133,7 @@ export function FormRegisterTeacher() {
                   <FormControl>
                     <Input
                       disabled={isLoading}
+                      autoComplete="current-password"
                       type="password"
                       placeholder="Digite uma senha com minimo 8 caracteres"
                       {...field}

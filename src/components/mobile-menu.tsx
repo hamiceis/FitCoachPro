@@ -14,7 +14,7 @@ const navData: string[] = [
 export function MobileMenu() {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button
           variant="ghost"
           className="absolute right-7 top-8 lg:hidden cursor-pointer"
