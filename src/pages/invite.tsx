@@ -39,7 +39,7 @@ export function InvitePage() {
 
   return (
     <div className="h-[32.3rem] md:h-[32.4rem] flex items-center justify-center">
-        <div className="px-4 py-6 rounded-lg flex flex-col items-center bg-zinc-900">
+        <div className="px-4 py-6 rounded-lg flex flex-col items-center bg-zinc-900/30 shadow-md">
           <h1 className="text-xl font-semibold text-zinc-100">
             Informe o <span className="text-primary text-lg">
               Email
@@ -70,7 +70,7 @@ export function InvitePage() {
                 </FormItem>
               )}
               />
-              <Button 
+              <Button
               className="self-end"
               type="submit" 
               >
