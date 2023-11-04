@@ -3,11 +3,11 @@ import { CardStudent } from "./card-students";
 import { ScrollArea } from "./ui/scroll-area";
 
 const pessoas = [
-  { name: 'Alice', email: 'alice@example.com' },
-  { name: 'Bob', email: 'bob@example.com' },
-  { name: 'Charlie', email: 'charlie@example.com' },
-  { name: 'David', email: 'david@example.com' },
-  { name: 'Eve', email: 'eve@example.com' }
+  { name: 'Alice', email: 'alice@example.com', sex: "F" },
+  { name: 'Bob', email: 'bob@example.com', sex: "M" },
+  { name: 'Charlie', email: 'charlie@example.com', sex: "M" },
+  { name: 'David', email: 'david@example.com', sex: "M" },
+  { name: 'Eve', email: 'eve@example.com', sex: "F" }
 ];
 
 export function Dashboard() {

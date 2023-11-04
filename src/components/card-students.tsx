@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface CardStudentProps {
@@ -16,10 +17,10 @@ export function CardStudent({ name, email }: CardStudentProps) {
 
       <div className="flex items-center gap-2">
         <Link to={`/student/${name}`}>
-          <Button variant="secondary">Ficha</Button>
-        </Link>
-        <Link to={`/workout/${name}`}>
-          <Button variant="secondary">Treinos</Button>
+          <Button variant="secondary" className="space-x-1">
+            <FileText size={14} />
+            <span>Ficha</span>
+          </Button>
         </Link>
       </div>
     </div>
