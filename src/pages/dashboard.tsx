@@ -9,7 +9,7 @@ export function DashboardPage() {
       <div className="hidden md:flex md:w-72 md:flex-col">
         <Sidebar />
       </div>
-      <div className="bg-zinc-600 w-full md:py-0 p-4">  
+      <div className="bg-zinc-600 h-max md:h-screen w-full md:py-0 p-4">  
         <Header />
         <Outlet  />
       </div>

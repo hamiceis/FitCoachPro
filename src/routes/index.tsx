@@ -5,10 +5,11 @@ import { DashboardPage } from "@/pages/dashboard";
 import { LayoutLogin } from "@/pages/login";
 import { StudentPage } from "@/pages/student";
 import { Workout } from "@/pages/workout";
+import { InvitePage } from "@/pages/invite";
+import { Profile } from "@/pages/profile";
 
 import { Button } from "@/components/ui/button";
 import { Dashboard } from "@/components/dashboard";
-import { InvitePage } from "@/pages/invite";
 
 export function RouterMain() {
   return (
@@ -21,7 +22,7 @@ export function RouterMain() {
         <Route path="students" element={<h1>Alunos</h1>} />
         <Route path="workouts" element={<h1>Treinos</h1>} />
         <Route path="invite" element={<InvitePage />} />
-        <Route path="profile" element={<h1>Perfil de usuário</h1>} />
+        <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="student/:id" element={<StudentPage />} />
       <Route path="workout/:id" element={<Workout />} />

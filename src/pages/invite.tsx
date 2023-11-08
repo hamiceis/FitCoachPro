@@ -35,6 +35,7 @@ export function InvitePage() {
       type: "background",
       action: <SendHorizonal size={16} />
     })
+    form.reset()
   }
 
   return (
