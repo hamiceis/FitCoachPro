@@ -1,16 +1,11 @@
-import { Dumbbell, Home, User2, Mail } from "lucide-react";
+import { Dumbbell, User2, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const routes = [
   {
-    icon: Home,
-    href: "/dashboard",
-    label: "Home",
-  },
-  {
     icon: User2,
-    href: "/dashboard/students",
+    href: "/dashboard",
     label: "Alunos",
   },
   {

@@ -41,29 +41,29 @@ export function InvitePage() {
   return (
     <div className="h-[32.3rem] md:h-[32.4rem] flex items-center justify-center">
         <div className="px-4 py-6 rounded-lg flex flex-col items-center bg-zinc-900/30 shadow-md">
-          <h1 className="text-xl font-semibold text-zinc-100">
+          <h1 className="text-base font-semibold text-zinc-100">
             Informe o <span className="text-primary text-lg">
               Email
-              </span> para adicionar aluno a sua lista
+              </span> do seu aluno para adicionar a sua lista
           </h1>
 
-          <div>
+          <div className="w-full">
           <Form {...form}>
             <form
-            className="w-full flex items-center gap-2"
+            className="flex items-center justify-center gap-2"
             onSubmit={form.handleSubmit(handleSubmit)}
             >
               <FormField 
               name="email"
               control={form.control}
               render={({ field }) => (
-                <FormItem className="flex items-center gap-2 relative">
+                <FormItem className="w-full flex items-center gap-2 relative">
                   <FormLabel className="font-bold">
                     Email
                   </FormLabel>
                   <FormControl>
                     <Input 
-                    className="w-72 border-zinc-100/10 focus-visible:ring-zinc-100"
+                    className=" border-zinc-100/10 focus-visible:ring-zinc-100"
                     placeholder="aluno@email.com" 
                     {...field} />
                   </FormControl>

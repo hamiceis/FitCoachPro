@@ -19,7 +19,6 @@ export function RouterMain() {
       <Route path="login" element={<LayoutLogin />} />
       <Route path="dashboard" element={<DashboardPage />}>
         <Route index element={<Dashboard />} />
-        <Route path="students" element={<h1>Alunos</h1>} />
         <Route path="workouts" element={<h1>Treinos</h1>} />
         <Route path="invite" element={<InvitePage />} />
         <Route path="profile" element={<Profile />} />

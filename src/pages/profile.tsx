@@ -72,7 +72,7 @@ export function Profile() {
     }
   };
   return (
-    <div className="w-full mt-4 p-2 h-max space-y-4 rounded-lg">
+    <div className="w-full mt-4 p-2 h-max space-y-4 rounded-lg bg-zinc-900/30 shadow-md">
       <h1 className="text-center text-2xl font-bold">Dados Pessoais</h1>
 
       <div className="w-full border py-2 px-3 rounded-xl border-zinc-100/10">
