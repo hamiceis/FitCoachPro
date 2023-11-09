@@ -56,10 +56,20 @@ export function Profile() {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const parsedData = formSchema.parse(data);
-    console.log(parsedData);
-    toast.success("Seus dados foram atualizados");
-    form.reset();
+    const filterData: Record<string, string | number> = {}
+    for(let [key, value] of Object.entries(data)){
+      if(value !== '' && value !== undefined){
+        filterData[key] = value
+      }
+    }
+
+    try {
+      console.log(filterData)
+      toast.success("Dados atualizados com sucesso")
+    }catch(error) {
+      console.log(error)
+      toast.error("Ocorreu erro ao atualizar os dados")
+    }
   };
   return (
     <div className="w-full mt-4 p-2 h-max space-y-4 rounded-lg">
