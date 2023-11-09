@@ -1,10 +1,10 @@
-import { Dumbbell, User2, Mail } from "lucide-react";
+import { Dumbbell, UserCircle2, Users, UserPlus } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const routes = [
   {
-    icon: User2,
+    icon: Users,
     href: "/dashboard",
     label: "Alunos",
   },
@@ -14,7 +14,7 @@ const routes = [
     label: "Treinos",
   },
   {
-    icon: Mail,
+    icon: UserPlus,
     href: "/dashboard/invite",
     label: "Convidar",
   },
@@ -59,10 +59,10 @@ export function Sidebar() {
         to="/dashboard/profile"
         className={cn(
           "text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-          pathname === "/profile" ? "text-white bg-white/10" : "text-zinc-400"
+          pathname === "/dashboard/profile" ? "text-white bg-white/10" : "text-zinc-400"
         )}
       >
-        <User2 className={cn("h-5 w-5 mr-3")} />
+        <UserCircle2 className={cn("h-5 w-5 mr-3")} />
         Profile
       </Link>
     </div>
