@@ -21,7 +21,7 @@ interface WorkoutCardProps {
   index: number;
 }
 
-const weekdays = [
+export const weekdays = [
   "Domingo",
   "Segunda",
   "Terça",

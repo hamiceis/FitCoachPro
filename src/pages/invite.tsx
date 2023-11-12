@@ -33,7 +33,7 @@ export function InvitePage() {
     toast({
       title: "Aluno cadastrado na sua lista",
       type: "background",
-      action: <SendHorizonal size={16} />
+      action: <SendHorizonal size={16} />,
     })
     form.reset()
   }

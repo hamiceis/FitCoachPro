@@ -7,6 +7,7 @@ import { StudentPage } from "@/pages/student";
 import { Workout } from "@/pages/workout";
 import { InvitePage } from "@/pages/invite";
 import { Profile } from "@/pages/profile";
+import { ExercisesPage } from "@/pages/exercises";
 
 import { Button } from "@/components/ui/button";
 import { Dashboard } from "@/components/dashboard";
@@ -19,12 +20,12 @@ export function RouterMain() {
       <Route path="login" element={<LayoutLogin />} />
       <Route path="dashboard" element={<DashboardPage />}>
         <Route index element={<Dashboard />} />
-        <Route path="workouts" element={<h1>Treinos</h1>} />
+        <Route path="workouts" element={<Workout />} />
         <Route path="invite" element={<InvitePage />} />
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="student/:id" element={<StudentPage />} />
-      <Route path="workout/:id" element={<Workout />} />
+      <Route path="exercises/:id" element={<ExercisesPage />} />
       <Route path="*" element={
           <div className="h-screen w-full flex flex-col items-center justify-center gap-5">
         

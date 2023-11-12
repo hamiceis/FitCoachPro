@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Form,
   FormField,
@@ -54,7 +53,7 @@ const initialValues = {
 type Role = "User" | "Teacher"
 
 export function Profile() {
-  const [role, setRole] = useState<Role>("User")
+  const role: Role = "User"
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

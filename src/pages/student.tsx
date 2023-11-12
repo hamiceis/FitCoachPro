@@ -19,17 +19,19 @@ export function StudentPage() {
         <HeaderStudent id={id} />
       </StudentSidebar>
 
-      <main className="h-full w-full py-4 px-4">
+      <main className="h-full py-4 px-4">
         <div className="flex justify-center items-center relative">
           <h1 className="text-3xl font-bold">Treinos</h1>
           <FormWorkout />
         </div>
 
-        <div className="h-max mt-6 grid grid-cols-4 md:grid-cols-7 grid-flow-row">
-          {arr.map((workout, i) => (
-            <WorkoutCard data={workout} index={i} key={workout.id + i} />
-          ))}
-        </div>
+      
+          <div className="mt-64 md:mt-28 grid grid-cols-3 md:grid-cols-6">
+            {arr.map((workout, i) => (
+              <WorkoutCard data={workout} index={i} key={workout.id + i} />
+            ))}
+          </div>
+      
       </main>
     </div>
   );
