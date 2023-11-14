@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,6 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   name: z
@@ -50,6 +52,8 @@ const formSchema = z.object({
 });
 
 export function FormRegisterTeacher() {
+  const navigate = useNavigate()
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,8 +67,15 @@ export function FormRegisterTeacher() {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-    form.reset();
+    try {
+      console.log(data);
+      toast.success("Professor, cadastrado com sucesso")
+      form.reset();
+      navigate("/login")
+  } catch(error) {
+    toast.error("Algo deu errado")
+    console.log("[REGISTER_FORM_ERROR]", error)
+  }
   };
 
   return (

@@ -1,14 +1,4 @@
-interface ExerciciosProps {
-  id: string
-  name_exercise: string;
-  repetitions: string;
-  interval: string;
-  method: string | null
-  load: number;
-  cadence: string;
-  observation: string;
-  workoutId: string
-}
+import { ExerciciosProps } from "@/types/exercise.type"
 
 export const exercicios: ExerciciosProps[]  = [
   {

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +17,7 @@ import { Button } from "@/components/ui/button";
 
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -27,35 +29,46 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: "Senha deve conter no mínimo 8 caracteres",
   }),
-  age: z.number().min(1, {
+  age: z.string().min(1, {
     message: "Idade é obrigatória",
   }),
   tel: z.string().optional(),
   gender: z.string().optional(),
-  height: z.number().min(1, {
+  height: z.string().min(1, {
     message: "Você precisa informar sua altura",
   }),
 });
 
 export function FormRegister() {
+
+  const navigate = useNavigate()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
-      age: 18,
+      age: "",
       tel: "",
       gender: "",
-      height: 155,
+      height: "",
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    form.reset();
+    try {
+        console.log({...values, age: Number(values.age), height: Number(values.height)});
+
+        toast.success("Cadastrado com sucesso")
+        form.reset();
+        navigate("/login")
+    } catch(error) {
+      toast.error("Algo deu errado")
+      console.log("[REGISTER_FORM_ERROR]", error)
+    }
   };
 
   return (

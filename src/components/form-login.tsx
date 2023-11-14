@@ -10,12 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
+
+import { toast } from "react-toastify";
 
 const formSchama = z.object({
   email: z.string().email({
@@ -25,7 +27,7 @@ const formSchama = z.object({
 });
 
 export function FormLogin() {
-  // const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchama>>({
     resolver: zodResolver(formSchama),
@@ -38,7 +40,15 @@ export function FormLogin() {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (data: z.infer<typeof formSchama>) => {
-    console.log(data);
+    try {
+      console.log(data)
+      toast.success("Logado com sucesso")
+      navigate("/dashboard")
+
+    }catch(error) {
+      toast.error("E-mail ou senha inválidos")
+      console.log("[LOGIN_ERROR]", error)
+    }
   };
 
   return (

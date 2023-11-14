@@ -1,21 +1,4 @@
 
-export type arryProps = Array<{
-  id: string;
-  type: string;
-  week_day: number;
-  day_month: string;
-  studentId: string;
-  exercises: exercisesProps[];
-}>;
-
-export type exercisesProps = {
-  id: string;
-  name: string;
-  reps: number;
-  sets: number;
-};
-
-
 export const arr: arryProps = [
   {
     id: "1",
