@@ -18,6 +18,10 @@ const formSchema = z.object({
   })
 })
 
+type Role = "user" | "teacher"
+
+const role: Role = "user"
+
 export function InvitePage() {
   const { toast } = useToast()
 
@@ -31,7 +35,7 @@ export function InvitePage() {
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data)
     toast({
-      title: "Aluno cadastrado na sua lista",
+      title: `${role === "user" ? "Aluno cadastrado na sua lista" : "Professor cadastrado na sua lista"}`,
       type: "background",
       action: <SendHorizonal size={16} />,
     })
@@ -44,7 +48,7 @@ export function InvitePage() {
           <h1 className="text-base font-semibold text-zinc-100">
             Informe o <span className="text-primary text-lg">
               Email
-              </span> do seu aluno para adicionar a sua lista
+              </span> do seu {role === "user" ? "aluno" : "professor"} para adicionar a sua lista
           </h1>
 
           <div className="w-full">
@@ -64,7 +68,7 @@ export function InvitePage() {
                   <FormControl>
                     <Input 
                     className=" border-zinc-100/10 focus-visible:ring-zinc-100"
-                    placeholder="aluno@email.com" 
+                    placeholder="email@gmail.com" 
                     {...field} />
                   </FormControl>
                   <FormMessage className="absolute top-9 left-12" />

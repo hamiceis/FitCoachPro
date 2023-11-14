@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { CardStudent } from "./card-students";
 import { ScrollArea } from "./ui/scroll-area";
+import { useEffect, useState } from "react";
 
 const pessoas = [
   { name: 'Alice', email: 'alice@example.com', sex: "F" },
@@ -11,6 +12,17 @@ const pessoas = [
 ];
 
 export function Dashboard() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true)
+  },[])
+
+
+  if(!isMounted) {
+    return null
+  }
+  
   return (
     <div className="w-full py-2 flex flex-col space-y-4">
       <div className="w-full mt-2">
