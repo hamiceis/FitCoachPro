@@ -25,6 +25,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.285.0",
     "react": "^18.2.0",
     "react-day-picker": "^8.9.1",
@@ -38,6 +39,7 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.14.199",
     "@types/node": "^20.8.4",
     "@types/react": "^18.2.15",
