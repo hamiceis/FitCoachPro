@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,9 +19,8 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import axios from "axios"
-import  { api } from "@/services/api"
-
+import axios from "axios";
+import { api } from "@/services/api";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -44,8 +43,7 @@ const formSchema = z.object({
 });
 
 export function FormRegister() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,18 +62,19 @@ export function FormRegister() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        const bodyResponse = {...values, 
-          age: Number(values.age),
-          height: Number(values.height)
-        }
-        
-        await api.post("/register/student", bodyResponse)
-        console.log(bodyResponse)
+      const bodyResponse = {
+        ...values,
+        age: Number(values.age),
+        height: Number(values.height),
+      };
 
-        toast.success("Cadastrado com sucesso")
-        form.reset();
-        navigate("/login")
-    } catch(error: any) {
+      await api.post("/register/student", bodyResponse);
+      console.log(bodyResponse);
+
+      toast.success("Cadastrado com sucesso");
+      form.reset();
+      navigate("/login");
+    } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
         toast.error(error.response.data);
       } else {
