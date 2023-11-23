@@ -19,17 +19,17 @@ export function DashboardPage() {
     const userAuthToken = Cookies.get("authToken");
 
     //Evita que o usuário acesse outras páginas caso não tenha um authToken, redirecionando para página "/login"
-    if(!userAuthToken){
-      alert("Usuário não autenticado")
-      return navigate("/login")
-    } else {
-      try { 
-        const parsedAuthToken: AuthTokenProps = JSON.parse(userAuthToken)
-        setAuthToken(parsedAuthToken)
-      } catch(error) {
-        console.error("Error parsing authToken:", error);
-      }
-    }
+    // if(!userAuthToken){
+    //   alert("Usuário não autenticado")
+    //   return navigate("/login")
+    // } else {
+    //   try { 
+    //     const parsedAuthToken: AuthTokenProps = JSON.parse(userAuthToken)
+    //     setAuthToken(parsedAuthToken)
+    //   } catch(error) {
+    //     console.error("Error parsing authToken:", error);
+    //   }
+    // }
   }, []);
 
   if (!isMounted) {

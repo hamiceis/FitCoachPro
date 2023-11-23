@@ -19,6 +19,10 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import axios from "axios"
+import  { api } from "@/services/api"
+
+
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Nome é Obrigátorio",
@@ -58,16 +62,26 @@ export function FormRegister() {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        console.log({...values, age: Number(values.age), height: Number(values.height)});
+        const bodyResponse = {...values, 
+          age: Number(values.age),
+          height: Number(values.height)
+        }
+        
+        await api.post("/register/student", bodyResponse)
+        console.log(bodyResponse)
 
         toast.success("Cadastrado com sucesso")
         form.reset();
         navigate("/login")
-    } catch(error) {
-      toast.error("Algo deu errado")
-      console.log("[REGISTER_FORM_ERROR]", error)
+    } catch(error: any) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data);
+      } else {
+        toast.error("Erro ao processar a requisição");
+      }
+      console.error("[REGISTER_FORM_ERROR]", error);
     }
   };
 
