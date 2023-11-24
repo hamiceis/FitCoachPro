@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,10 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { toast } from "react-toastify";
+import axios from "axios";
+import { api } from "@/services/api";
 
 const formSchema = z.object({
   name: z
@@ -52,8 +55,8 @@ const formSchema = z.object({
 });
 
 export function FormRegisterTeacher() {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,24 +69,26 @@ export function FormRegisterTeacher() {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      console.log(data);
-      toast.success("Professor, cadastrado com sucesso")
-      form.reset();
-      navigate("/login")
-  } catch(error) {
-    toast.error("Algo deu errado")
-    console.log("[REGISTER_FORM_ERROR]", error)
-  }
+      await api.post("/register/teacher", data);
+      toast.success("Professor cadastrado com sucesso");
+      navigate("/login");
+    } catch (error: any) {
+      if (axios.isAxiosError(error) && error.response) {
+        const { message } = error.response.data;
+        toast.error(message);
+      } else {
+        toast.error("Algo deu errado");
+        console.log("[REGISTER_FORM_ERROR]", error);
+      }
+    }
   };
 
   return (
     <div className="p-4 space-y-2 max-w-xl mx-auto relative rounded-3xl">
       <Form {...form}>
-        <h3 className="text-lg font-medium text-center">
-          Formulário
-        </h3>
+        <h3 className="text-lg font-medium text-center">Formulário</h3>
         <Button variant="ghost" className="absolute top-1 rounded-full w-10">
           <Link to="/">
             <ArrowLeft />

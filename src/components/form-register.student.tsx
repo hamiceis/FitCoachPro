@@ -71,8 +71,7 @@ export function FormRegister() {
       await api.post("/register/student", bodyResponse);
       console.log(bodyResponse);
 
-      toast.success("Cadastrado com sucesso");
-      form.reset();
+      toast.success("Aluno cadastrado com sucesso");
       navigate("/login");
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
