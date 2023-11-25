@@ -6,13 +6,14 @@ import { Sidebar } from "@/components/sidebar";
 
 import { AuthTokenProps } from "@/types/authToken.types";
 
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+import { ContextType } from "@/types/OutletContextType.types";
 
 export function DashboardPage() {
   const [isMounted, setIsMounted] = useState(false);
-  const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null)
+  const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsMounted(true);
@@ -23,7 +24,7 @@ export function DashboardPage() {
     //   alert("Usuário não autenticado")
     //   return navigate("/login")
     // } else {
-    //   try { 
+    //   try {
     //     const parsedAuthToken: AuthTokenProps = JSON.parse(userAuthToken)
     //     setAuthToken(parsedAuthToken)
     //   } catch(error) {
@@ -43,7 +44,7 @@ export function DashboardPage() {
       </div>
       <div className="bg-zinc-600 h-max md:h-screen w-full md:py-0 p-4">
         <Header />
-        <Outlet context={authToken} />
+        <Outlet context={{ authToken } satisfies ContextType} />
       </div>
     </div>
   );
