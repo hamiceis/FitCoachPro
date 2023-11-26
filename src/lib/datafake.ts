@@ -1,5 +1,21 @@
+type Exercise = {
+  id: string
+  name: string
+  reps: number
+  sets: number
+}
 
-export const arr: arryProps = [
+interface Workout {
+  id: string;
+  type: string;
+  week_day: number;
+  day_month: string;
+  studentId: string;
+  exercises: Exercise[]
+}
+
+
+export const arr: Workout[] = [
   {
     id: "1",
     type: "A",

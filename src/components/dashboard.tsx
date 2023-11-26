@@ -13,13 +13,19 @@ import { StudentProps } from "@/types/student.types";
 // import { useAuthTokenContext } from "@/hooks/useAuthToken";
 
 export function Dashboard() {
-  const [search, setSearch] = useState<string>("")
+  const [search, setSearch] = useState<string>("");
   const navigate = useNavigate();
   // const { authToken } = useAuthTokenContext()
 
   const { data, loading, error } = useFetch(`http://localhost:3000/students`);
 
   //implementar lógica para filtrar apenas os usuários que serach.length > 0
+  const filterUsers =
+    search.length > 0
+      ? data.filter((user: StudentProps) =>
+          user.name.toLowerCase().includes(search)
+        )
+      : data;
 
   if (error) {
     alert("Ocorreu um error");
@@ -44,15 +50,17 @@ export function Dashboard() {
       <ScrollArea className="h-[26.5rem] md:h-[27.5rem]">
         <div className="flex flex-col space-y-4">
           {loading ? (
-            <h2>Loading</h2>
+            <div className="h-72 flex justify-center items-center">
+              <h2 className="font-bold text-2xl animate-pulse">Carregando</h2>
+            </div>
           ) : (
-            data.map((pessoa: StudentProps) => {
+            filterUsers.map((user: StudentProps) => {
               return (
                 <CardStudent
-                  key={pessoa.id}
-                  id={pessoa.id}
-                  name={pessoa.name}
-                  email={pessoa.email}
+                  key={user.id}
+                  id={user.id}
+                  name={user.name}
+                  email={user.email}
                 />
               );
             })

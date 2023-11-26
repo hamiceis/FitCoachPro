@@ -9,14 +9,16 @@ import { FormWorkout } from "@/components/form-workout";
 export function StudentPage() {
   const { id } = useParams();
 
+  console.log(id)
+
   return (
     <div className="min-h-screen h-full w-full bg-zinc-600">
       <div className="hidden md:block">
-        <HeaderStudent id={id} />
+        <HeaderStudent  />
       </div>
 
       <StudentSidebar>
-        <HeaderStudent id={id} />
+        <HeaderStudent  />
       </StudentSidebar>
 
       <main className="h-full py-4 px-4">
