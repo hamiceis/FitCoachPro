@@ -1,14 +1,16 @@
 import { useParams } from "react-router-dom";
+
 import { StudentSidebar } from "@/components/student-sidebar";
-import { arr } from "@/lib/datafake"
 import { HeaderStudent } from "@/components/header-student";
 import { WorkoutCard } from "@/components/workout-card";
 import { FormWorkout } from "@/components/form-workout";
 
+import { arr } from "@/lib/datafake"
+
 
 export function StudentPage() {
-  const { id } = useParams();
 
+  const { id } = useParams()
   console.log(id)
 
   return (
