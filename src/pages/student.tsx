@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useUsersStore } from "@/hooks/useUsers"
 
 import { StudentSidebar } from "@/components/student-sidebar";
 import { HeaderStudent } from "@/components/header-student";
@@ -6,21 +7,32 @@ import { WorkoutCard } from "@/components/workout-card";
 import { FormWorkout } from "@/components/form-workout";
 
 import { arr } from "@/lib/datafake"
+import { useEffect, useState } from "react";
+import { StudentData } from "@/types/student.types";
 
 
 export function StudentPage() {
-
+  const [data, setData] = useState<StudentData[] | []>([])
+  const { users } = useUsersStore()
   const { id } = useParams()
-  console.log(id)
+ 
+  useEffect(() => {
+    if(users) {
+      setData(users)
+    }
+  },
+  [users])
+
+  const user = data.find((user) => user.id === id)
 
   return (
     <div className="min-h-screen h-full w-full bg-zinc-600">
       <div className="hidden md:block">
-        <HeaderStudent  />
+        <HeaderStudent data={user} />
       </div>
 
       <StudentSidebar>
-        <HeaderStudent  />
+        <HeaderStudent data={user} />
       </StudentSidebar>
 
       <main className="h-full py-4 px-4">

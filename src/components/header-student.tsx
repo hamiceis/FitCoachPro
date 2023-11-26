@@ -1,18 +1,13 @@
-import { useState } from "react";
 import { StatsInfo } from "./stats-info";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { DataStudent } from "@/types/student.types";
+import { format } from "date-fns";
 
-type Sex = "man" | "woman";
-
-export function HeaderStudent() {
-
-  const [sex, setSex] = useState<Sex>("man");
-
-  const imageSrc = sex === "woman" ? "/woman-vetor.jpg" : "/man-vetor.jpg";
-
+export function HeaderStudent({ data }: DataStudent) {
   const navigate = useNavigate();
+  const imageSrc = data?.gender === "F" ? "/woman-vetor.jpg" : "/man-vetor.jpg";
 
   return (
     <header className="relative h-max md:h-max w-full px-10 py-5 flex items-center justify-center md:gap-32 gap-36 bg-black">
@@ -33,18 +28,35 @@ export function HeaderStudent() {
       </div>
 
       <div className="md:w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-y-5">
-        <StatsInfo span="Nome" info="hamiceis pereira" className="capitalize" />
-        <StatsInfo span="Idade" info="29" />
-        <StatsInfo span="Email" info={`user@hotmail.com`} />
-        <StatsInfo span="Sexo" info="M" />
-        <StatsInfo span="Altura" info="187cm" />
-        <StatsInfo span="Peso" info="73kg" />
-        <StatsInfo span="Telefone" info="(81)99988-1234" />
-        <StatsInfo span="IMC" info="ideal" />
-        <StatsInfo span="Nivel de treinamento" info="Iniciante" />
-        <StatsInfo span="Meta" info="Ganho de massa muscular" />
-        <StatsInfo span="Data de inicio do protocolo" info="03/01/2024" />
-        <StatsInfo span="Data de fim do protocolo" info="03/06/2024" />
+        <StatsInfo span="Nome" info={data?.name || ""} className="capitalize" />
+        <StatsInfo span="Idade" info={String(data?.age)} />
+        <StatsInfo span="Email" info={data?.email || "Não definido"} />
+        <StatsInfo span="Sexo" info={data?.gender || "Não definido"} />
+        <StatsInfo span="Altura" info={`${data?.height}cm` || "Não definido"} />
+        <StatsInfo span="Peso" info={String(data?.weigth || "Não definido")} />
+        <StatsInfo span="Telefone" info={data?.tel || "Não informado"} />
+        <StatsInfo span="IMC" info={String(data?.imc) || "Não definido"} />
+        <StatsInfo
+          span="Nivel de treinamento"
+          info={data?.conditioning_level || "Não definido"}
+        />
+        <StatsInfo span="Meta" info={data?.goal || "Não definido"} />
+        <StatsInfo
+          span="Data de inicio do protocolo"
+          info={
+            data?.protocol_start_date
+              ? format(new Date(data.protocol_start_date), "dd-MM-yyyy")
+              : "Não definido"
+          }
+        />
+        <StatsInfo
+          span="Data de fim do protocolo"
+          info={
+            data?.protocol_end_date
+              ? format(new Date(data.protocol_end_date), "dd-MM-yyyy")
+              : "Não definido"
+          }
+        />
       </div>
     </header>
   );

@@ -13,6 +13,7 @@ export interface StudentData {
   age: number;
   height: number;
   weigth: string | number | null;
+  imc: String | number | null;
   training_level: string | null;
   conditioning_level: string | null;
   weekly_Frequency: string | null;
@@ -24,5 +25,5 @@ export interface StudentData {
 }
 
 export interface DataStudent {
-  data: StudentData
+  data?: StudentData
 }
