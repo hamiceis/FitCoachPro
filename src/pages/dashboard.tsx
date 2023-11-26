@@ -13,7 +13,7 @@ export function DashboardPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     setIsMounted(true);
@@ -43,7 +43,7 @@ export function DashboardPage() {
         <Sidebar />
       </div>
       <div className="bg-zinc-600 h-max md:h-screen w-full md:py-0 p-4">
-        <Header />
+        <Header id={authToken?.id || "a3a22e3f-1cc1-4685-85d9-b6db1cac2eda"}  />
         <Outlet context={{ authToken } satisfies ContextType} />
       </div>
     </div>
