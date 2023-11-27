@@ -1,11 +1,11 @@
-type Exercise = {
+export type Exercise = {
   id: string
   name: string
   reps: number
   sets: number
 }
 
-interface Workout {
+export interface Workout {
   id: string;
   type: string;
   week_day: number;

@@ -3,21 +3,14 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { exercisesProps } from "@/lib/datafake";
+import { Workout } from "@/lib/datafake";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { FormExercise } from "./form-exercise";
 
 interface WorkoutCardProps {
-  data: {
-    id: string;
-    type: string;
-    week_day: number;
-    day_month: string;
-    studentId: string;
-    exercises: exercisesProps[];
-  };
+  data: Workout;
   index: number;
 }
 

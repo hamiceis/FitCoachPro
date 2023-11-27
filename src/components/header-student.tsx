@@ -28,14 +28,18 @@ export function HeaderStudent({ data }: DataStudent) {
       </div>
 
       <div className="md:w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-y-5">
-        <StatsInfo span="Nome" info={data?.name || ""} className="capitalize" />
+        <StatsInfo
+          span="Nome"
+          info={data?.name || "User"}
+          className="capitalize"
+        />
         <StatsInfo span="Idade" info={String(data?.age)} />
         <StatsInfo span="Email" info={data?.email || "Não definido"} />
         <StatsInfo span="Sexo" info={data?.gender || "Não definido"} />
-        <StatsInfo span="Altura" info={`${data?.height}cm` || "Não definido"} />
+        <StatsInfo span="Altura" info={`${Number(data?.height) / 100}cm` || "Não definido"} />
         <StatsInfo span="Peso" info={String(data?.weigth || "Não definido")} />
         <StatsInfo span="Telefone" info={data?.tel || "Não informado"} />
-        <StatsInfo span="IMC" info={String(data?.imc) || "Não definido"} />
+        <StatsInfo span="IMC" info={String(data?.imc ?? "Não definido")} />
         <StatsInfo
           span="Nivel de treinamento"
           info={data?.conditioning_level || "Não definido"}

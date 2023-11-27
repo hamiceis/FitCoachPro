@@ -15,6 +15,8 @@ export function StudentPage() {
   const { users } = useUsersStore();
   const { id } = useParams();
 
+  
+
   useEffect(() => {
     if (users) {
       setData(users);
