@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-export function useFetch(url: string) {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+interface FetchResult<T> {
+  data: T | undefined;
+  error: string | null;
+  loading: boolean;
+}
+
+export function useFetch<T>(url: string): FetchResult<T> {
+  const [data, setData] = useState<T | undefined>(undefined);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -11,9 +17,10 @@ export function useFetch(url: string) {
 
     async function fetchData() {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get<T>(url);
         if (isMounted) {
           setData(response.data);
+          setError(null); // Limpar o erro em caso de sucesso
         }
       } catch (error: any) {
         if (isMounted) {
@@ -26,7 +33,9 @@ export function useFetch(url: string) {
       }
     }
 
-    fetchData();
+    if (url) {
+      fetchData();
+    }
 
     return () => {
       isMounted = false;

@@ -1,6 +1,6 @@
-import { ExerciciosProps } from "@/types/exercise.type"
+import { Exercises } from "@/types/exercise.type"
 
-export const exercicios: ExerciciosProps[]  = [
+export const exercicios: Exercises[]  = [
   {
     id: '1',
     name_exercise: 'Flexões',

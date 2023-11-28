@@ -20,7 +20,7 @@ export function Dashboard() {
   const navigate = useNavigate();
   const { setUsers } = useUsersStore();
 
-  const { data, loading, error } = useFetch(`http://localhost:3000/students`);
+  const { data, loading, error } = useFetch<StudentData[]>(`http://localhost:3000/students`);
 
   //UseEffect garante que os dados, sejam aguardados e passados para dentro do contexto do Zustand
   useEffect(() => {
@@ -30,9 +30,9 @@ export function Dashboard() {
   }, [data, setUsers]);
  
 
-  const filterUsers: StudentData[] =
+  const filterUsers =
     search.length > 0
-      ? data.filter((user: StudentProps) =>
+      ? data!.filter((user: StudentProps) =>
           user.name.toLowerCase().includes(search)
         )
       : data;
@@ -64,7 +64,7 @@ export function Dashboard() {
               <h2 className="font-bold text-2xl animate-pulse">Carregando</h2>
             </div>
           ) : (
-            filterUsers.map((user) => {
+            filterUsers!.map((user) => {
               return (
                 <CardStudent
                   key={user.id}

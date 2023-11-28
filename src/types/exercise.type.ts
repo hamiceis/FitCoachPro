@@ -1,4 +1,4 @@
-export interface ExerciciosProps {
+export interface Exercises {
   id: string
   name_exercise: string;
   repetitions: string;

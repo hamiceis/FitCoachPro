@@ -93,7 +93,7 @@ export function FormExercise({ children, actionType }: FormExerciseProps) {
 
   return (
     <Dialog onOpenChange={setModalOpen} open={modalOpen}>
-      <DialogTrigger asChild className="text-xs md:text-sm">
+      <DialogTrigger className="text-xs md:text-sm" asChild>
         {children}
       </DialogTrigger>
 

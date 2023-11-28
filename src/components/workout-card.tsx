@@ -3,14 +3,15 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { Workout } from "@/lib/datafake";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { FormExercise } from "./form-exercise";
+import { Workouts } from "@/types/workout.types";
 
 interface WorkoutCardProps {
-  data: Workout;
+  data: Workouts;
   index: number;
 }
 
@@ -43,7 +44,7 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
       </PopoverTrigger>
 
       <PopoverContent className="w-80 px-2 py-2">
-        {data?.exercises.map((exercise) => (
+        {data.exercises && data.exercises.map((exercise) => (
           <div
             className="px-2 pt-1 flex flex-col gap-1 border border-zinc-100"
             key={exercise.id}
@@ -60,9 +61,9 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
               </Button>
             </div>
             <Separator className="bg-zinc-100" />
-            <span>Exercicio: {exercise.name}</span>
-            <span>Repetições: {exercise.reps}</span>
-            <span>Sets: {exercise.sets}</span>
+            <span>Exercicio: {exercise.name_exercise}</span>
+            <span>Repetições: {exercise.repetitions}</span>
+            <span>Intervalo: {exercise.interval}</span>
           </div>
         ))}
         <div className="w-full mt-2">
