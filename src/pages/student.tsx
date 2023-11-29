@@ -20,17 +20,19 @@ export function StudentPage() {
 
   const { data: workouts, error, loading } = useFetch<Workouts[]>(WORKOUTS_URL);
 
-  if(error) {
-    alert(error)
+  if (error) {
+    return <h1>{error}</h1>;
   }
 
   useEffect(() => {
+    if (!loading) {
+      console.log("Dados carregados");
+    }
+
     if (users && id) {
       setData(users);
     }
-
-  }, [users, id]);
-
+  }, [users, id, loading, workouts]);
 
   const user = data.find((u) => u.id === id);
 
@@ -50,15 +52,25 @@ export function StudentPage() {
           <FormWorkout />
         </div>
 
-        <div className="mt-64 md:mt-28 grid grid-cols-3 md:grid-cols-6">
-          {loading && <h1>Carregando...</h1>}
-          {workouts?.length === 0 ? <h1>Não foram encontrado treinos</h1> : (
-            workouts?.map((workoutData, i) => (
+        {loading && (
+          <h1 className="mt-20 text-center font-bold text-2xl animate-bounce">
+            Carregando...
+          </h1>
+        )}
+
+        {!loading && workouts!.length === 0 ? (
+          <div className="h-40 w-full flex justify-center items-center ">
+            <h1 className="font-bold text-2xl absolute">
+              Não foram encontrado treinos
+            </h1>
+          </div>
+        ) : (
+          <div className="mt-64 md:mt-28 grid grid-cols-3 md:grid-cols-6 relative">
+            {workouts?.map((workoutData, i) => (
               <WorkoutCard data={workoutData} index={i} key={workoutData.id} />
-            ))
-          )}
-          
-        </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

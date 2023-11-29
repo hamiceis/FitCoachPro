@@ -36,7 +36,10 @@ export function HeaderStudent({ data }: DataStudent) {
         <StatsInfo span="Idade" info={String(data?.age)} />
         <StatsInfo span="Email" info={data?.email || "Não definido"} />
         <StatsInfo span="Sexo" info={data?.gender || "Não definido"} />
-        <StatsInfo span="Altura" info={`${Number(data?.height) / 100}cm` || "Não definido"} />
+        <StatsInfo
+          span="Altura"
+          info={`${Number(data?.height) / 100}cm` || "Não definido"}
+        />
         <StatsInfo span="Peso" info={String(data?.weigth || "Não definido")} />
         <StatsInfo span="Telefone" info={data?.tel || "Não informado"} />
         <StatsInfo span="IMC" info={String(data?.imc ?? "Não definido")} />
