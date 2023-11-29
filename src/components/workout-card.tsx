@@ -64,6 +64,10 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             <span>Exercicio: {exercise.name_exercise}</span>
             <span>Repetições: {exercise.repetitions}</span>
             <span>Intervalo: {exercise.interval}</span>
+            <span>Carga: {exercise.load}</span>
+            <span>Cadencia: {exercise.cadence}</span>
+            <span>Método: {exercise.method}</span>
+            <p className="mt-4 italic text-muted-foreground">Intervalo: {exercise.observation}</p>
           </div>
         ))}
         <div className="w-full mt-2">
