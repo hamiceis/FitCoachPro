@@ -12,6 +12,7 @@ import { Workouts } from "@/types/workout.types";
 
 interface WorkoutCardProps {
   data: Workouts;
+  id: string;
   index: number;
 }
 
@@ -25,7 +26,11 @@ export const weekdays = [
   "Sábado",
 ];
 
-export function WorkoutCard({ data, index }: WorkoutCardProps) {
+export function WorkoutCard({ data, id, index }: WorkoutCardProps) {
+
+  const deleteExercise = async (id: string)=> {
+    console.log(id)
+  }
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -50,13 +55,13 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             key={exercise.id}
           >
             <div className="flex items-center justify-between">
-              <FormExercise actionType="Edit">
+              <FormExercise actionType="Edit" exerciseId={exercise.id} exerciseData={exercise}>
                 <Button className="p-3">
                   <Pencil size={16} />
                 </Button>
               </FormExercise>
 
-              <Button className="p-3">
+              <Button className="p-3" onClick={() => deleteExercise(exercise.id)}>
                 <Trash2 size={16} />
               </Button>
             </div>
@@ -67,11 +72,11 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             <span>Carga: {exercise.load}</span>
             <span>Cadencia: {exercise.cadence}</span>
             <span>Método: {exercise.method}</span>
-            <p className="mt-4 italic text-muted-foreground">Intervalo: {exercise.observation}</p>
+            <p className="mt-4 italic text-muted-foreground">Observação: {exercise.observation}</p>
           </div>
         ))}
         <div className="w-full mt-2">
-          <FormExercise actionType="Create">
+          <FormExercise actionType="Create" workoutId={id}>
             <Button className="w-full flex gap-4">
               <Plus />
               Adicionar Exercício

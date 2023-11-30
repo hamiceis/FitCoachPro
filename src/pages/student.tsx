@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { useUsersStore } from "@/hooks/useUsers";
+import { useFetch } from "@/hooks/useFetch";
 
 import { StudentSidebar } from "@/components/student-sidebar";
 import { HeaderStudent } from "@/components/header-student";
 import { WorkoutCard } from "@/components/workout-card";
 import { FormWorkout } from "@/components/form-workout";
 
-import { useEffect, useState } from "react";
 import { StudentData } from "@/types/student.types";
-import { useFetch } from "@/hooks/useFetch";
 import { Workouts } from "@/types/workout.types";
 
 export function StudentPage() {
@@ -25,14 +26,10 @@ export function StudentPage() {
   }
 
   useEffect(() => {
-    if (!loading) {
-      console.log("Dados carregados");
-    }
-
     if (users && id) {
       setData(users);
     }
-  }, [users, id, loading, workouts]);
+  }, [users, id,  workouts]);
 
   const user = data.find((u) => u.id === id);
 
@@ -67,7 +64,7 @@ export function StudentPage() {
         ) : (
           <div className="mt-64 md:mt-28 grid grid-cols-3 md:grid-cols-6 relative">
             {workouts?.map((workoutData, i) => (
-              <WorkoutCard data={workoutData} index={i} key={workoutData.id} />
+              <WorkoutCard data={workoutData} id={workoutData.id} index={i} key={workoutData.id} />
             ))}
           </div>
         )}

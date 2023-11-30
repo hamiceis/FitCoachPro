@@ -27,6 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ReactNode, useState } from "react";
+import { Exercises } from "@/types/exercise.type";
 
 const formSchema = z.object({
   exerciseName: z.string().min(1, {
@@ -53,6 +54,9 @@ type ActionTypeProps = "Create" | "Edit";
 interface FormExerciseProps {
   children?: ReactNode;
   actionType?: ActionTypeProps;
+  workoutId?: string;
+  exerciseId?: string;
+  exerciseData?: Omit<Exercises, 'id'>;
 }
 
 const initialForm = {
@@ -65,29 +69,19 @@ const initialForm = {
   observation: "",
 };
 
-export function FormExercise({ children, actionType }: FormExerciseProps) {
+export function FormExercise({ children, actionType, workoutId, exerciseId, exerciseData }: FormExerciseProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const isEditing = actionType === "Edit";
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: isEditing
-      ? {
-          exerciseName: "Remada baixa",
-          repetitions: "4x20",
-          interval: "30s",
-          method: "dropset",
-          load: "leve",
-          cadence: "Fast",
-          observation: "Nenhuma observação",
-        }
-      : initialForm,
+    defaultValues: (isEditing ? exerciseData : initialForm) as z.infer<typeof formSchema>
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    console.log({ data: values, workoutId, exerciseId});
     form.reset();
-    toast.success("Exercicio Atualizado");
+    toast.success("Exercicio Atualizado/criado");
     setModalOpen(false);
   };
 
