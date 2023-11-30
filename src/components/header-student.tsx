@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DataStudent } from "@/types/student.types";
 import { format } from "date-fns";
+import { formatTel } from "@/lib/formatTel";
 
 export function HeaderStudent({ data }: DataStudent) {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export function HeaderStudent({ data }: DataStudent) {
           info={`${Number(data?.height) / 100}cm` || "Não definido"}
         />
         <StatsInfo span="Peso" info={String(data?.weigth || "Não definido")} />
-        <StatsInfo span="Telefone" info={data?.tel || "Não informado"} />
+        <StatsInfo span="Telefone" info={data?.tel ? formatTel(data.tel) : "Não informado"} />
         <StatsInfo span="IMC" info={String(data?.imc ?? "Não definido")} />
         <StatsInfo
           span="Nivel de treinamento"

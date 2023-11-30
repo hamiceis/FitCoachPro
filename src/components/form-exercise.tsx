@@ -30,7 +30,7 @@ import { ReactNode, useState } from "react";
 import { Exercises } from "@/types/exercise.type";
 
 const formSchema = z.object({
-  exerciseName: z.string().min(1, {
+  name_exercise: z.string().min(1, {
     message: "Escreva o nome do exercício",
   }),
   repetitions: z.string().min(1, {
@@ -60,7 +60,7 @@ interface FormExerciseProps {
 }
 
 const initialForm = {
-  exerciseName: "",
+  name_exercise: "",
   repetitions: "",
   interval: "",
   method: "",
@@ -75,7 +75,11 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: (isEditing ? exerciseData : initialForm) as z.infer<typeof formSchema>
+    defaultValues: (
+      isEditing 
+      ? {...exerciseData, load: String(exerciseData?.load)} 
+      : initialForm
+      ) as z.infer<typeof formSchema>
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -109,7 +113,7 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
 
                   <FormField
                     control={form.control}
-                    name="exerciseName"
+                    name="name_exercise"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Nome do exercicio</FormLabel>
