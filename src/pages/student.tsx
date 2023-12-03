@@ -34,7 +34,7 @@ export function StudentPage() {
   const user = data.find((u) => u.id === id);
 
   return (
-    <div className="min-h-screen h-full w-full bg-zinc-600">
+    <div className="min-h-screen w-full bg-zinc-600">
       <div className="hidden md:block">
         <HeaderStudent data={user} />
       </div>

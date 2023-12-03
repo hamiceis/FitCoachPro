@@ -10,6 +10,7 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import { FormExercise } from "./form-exercise";
 import { Workouts } from "@/types/workout.types";
 
+
 interface WorkoutCardProps {
   data: Workouts;
   id: string;
@@ -48,10 +49,12 @@ export function WorkoutCard({ data, id, index }: WorkoutCardProps) {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="w-80 px-2 py-2">
+
+      
+      <PopoverContent className="w-80 h-80 px-2 py-2 overflow-y-scroll">
         {data.exercises && data.exercises.map((exercise) => (
           <div
-            className="px-2 pt-1 flex flex-col gap-1 border border-zinc-100"
+            className="px-2 pt-1 mt-2 flex flex-col gap-1 border border-zinc-100"
             key={exercise.id}
           >
             <div className="flex items-center justify-between">
@@ -84,6 +87,7 @@ export function WorkoutCard({ data, id, index }: WorkoutCardProps) {
           </FormExercise>
         </div>
       </PopoverContent>
+    
     </Popover>
   );
 }
