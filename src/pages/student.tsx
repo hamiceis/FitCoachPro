@@ -14,6 +14,8 @@ import { Workouts } from "@/types/workout.types";
 
 export function StudentPage() {
   const [data, setData] = useState<StudentData[] | []>([]);
+  
+
   const { users } = useUsersStore();
   const { id } = useParams();
 
@@ -29,7 +31,7 @@ export function StudentPage() {
     if (users && id) {
       setData(users);
     }
-  }, [users, id,  workouts]);
+  }, [users, id, workouts]);
 
   const user = data.find((u) => u.id === id);
 
@@ -64,7 +66,7 @@ export function StudentPage() {
         ) : (
           <div className="mt-64 md:mt-28 grid grid-cols-3 md:grid-cols-6 relative">
             {workouts?.map((workoutData, i) => (
-              <WorkoutCard data={workoutData} id={workoutData.id} index={i} key={workoutData.id} />
+              <WorkoutCard data={workoutData} index={i} key={workoutData.id}  />
             ))}
           </div>
         )}

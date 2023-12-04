@@ -10,10 +10,14 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import { FormExercise } from "./form-exercise";
 import { Workouts } from "@/types/workout.types";
 
+import { api } from "@/services/api";
+import { toast } from "react-toastify";
+import { cn } from "@/lib/utils";
+
+
 
 interface WorkoutCardProps {
   data: Workouts;
-  id: string;
   index: number;
 }
 
@@ -27,10 +31,16 @@ export const weekdays = [
   "Sábado",
 ];
 
-export function WorkoutCard({ data, id, index }: WorkoutCardProps) {
-
+export function WorkoutCard({ data, index }: WorkoutCardProps) {
   const deleteExercise = async (id: string)=> {
-    console.log(id)
+    try {
+     const response = await api.delete(`/exercise/${data.id}/${id}`)
+     toast.success(response.data.message)
+    } catch(error: any) {
+      console.log(error.response.data)
+      toast.error("Algo deu errado")
+    }
+
   }
   return (
     <Popover>
@@ -51,7 +61,9 @@ export function WorkoutCard({ data, id, index }: WorkoutCardProps) {
 
 
       
-      <PopoverContent className="w-80 h-80 px-2 py-2 overflow-y-scroll">
+      <PopoverContent className={cn("w-80 px-2 pt-0 pb-2 overflow-y-scroll",
+      data.exercises.length > 0 ? "h-80" : "h-fit"
+      )}>
         {data.exercises && data.exercises.map((exercise) => (
           <div
             className="px-2 pt-1 mt-2 flex flex-col gap-1 border border-zinc-100"
@@ -75,11 +87,11 @@ export function WorkoutCard({ data, id, index }: WorkoutCardProps) {
             <span>Carga: {exercise.load}</span>
             <span>Cadencia: {exercise.cadence}</span>
             <span>Método: {exercise.method}</span>
-            <p className="mt-4 italic text-muted-foreground">Observação: {exercise.observation}</p>
+            <p className="mt-4 italic text-muted-foreground">Observação: {exercise.observation || "Nenhuma observação"}</p>
           </div>
         ))}
         <div className="w-full mt-2">
-          <FormExercise actionType="Create" workoutId={id}>
+          <FormExercise actionType="Create" workoutId={data.id}>
             <Button className="w-full flex gap-4">
               <Plus />
               Adicionar Exercício

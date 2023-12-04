@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ReactNode, useState } from "react";
 import { Exercises } from "@/types/exercise.type";
+import { api } from "@/services/api";
 
 const formSchema = z.object({
   name_exercise: z.string().min(1, {
@@ -82,11 +83,30 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
       ) as z.infer<typeof formSchema>
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log({ data: values, workoutId, exerciseId});
-    form.reset();
-    toast.success("Exercicio Atualizado/criado");
-    setModalOpen(false);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      if(isEditing) {
+        const response = await api.post(`/exercise/${workoutId}/${exerciseId}`, {
+        ...values, 
+        exerciseName: values.name_exercise,
+        load: parseFloat(values.load)
+      })
+        toast.success(response.data.message)
+        form.reset()
+        return setModalOpen(false)
+      } 
+      const response = await api.post(`/exercise/${workoutId}`, {
+        ...values, 
+        exerciseName: values.name_exercise,
+        load: parseFloat(values.load)
+      })
+      toast.success(response.data.message)
+      form.reset()
+      return setModalOpen(false)
+    }catch(error: any) {
+      console.log(error.response)
+      toast.error("Algo deu errado")
+    }
   };
 
   return (
@@ -175,7 +195,7 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
                         <FormItem>
                           <FormLabel>Carga</FormLabel>
                           <FormControl>
-                            <Input placeholder="Leve" {...field} />
+                            <Input placeholder="10.4" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
