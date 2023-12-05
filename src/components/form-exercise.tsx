@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ReactNode, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import { Exercises } from "@/types/exercise.type";
 import { api } from "@/services/api";
 
@@ -58,6 +58,7 @@ interface FormExerciseProps {
   workoutId?: string;
   exerciseId?: string;
   exerciseData?: Omit<Exercises, 'id'>;
+  setForceRender: Dispatch<SetStateAction<boolean>>
 }
 
 const initialForm = {
@@ -70,7 +71,7 @@ const initialForm = {
   observation: "",
 };
 
-export function FormExercise({ children, actionType, workoutId, exerciseId, exerciseData }: FormExerciseProps) {
+export function FormExercise({ children, actionType, workoutId, exerciseId, exerciseData, setForceRender }: FormExerciseProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const isEditing = actionType === "Edit";
 
@@ -93,8 +94,7 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
       })
         toast.success(response.data.message)
         form.reset()
-        return setModalOpen(false)
-      } 
+      } else {
       const response = await api.post(`/exercise/${workoutId}`, {
         ...values, 
         exerciseName: values.name_exercise,
@@ -102,10 +102,13 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
       })
       toast.success(response.data.message)
       form.reset()
-      return setModalOpen(false)
+    }
     }catch(error: any) {
       console.log(error.response)
       toast.error("Algo deu errado")
+    } finally {
+      setModalOpen(false)
+      setForceRender((prevState) => !prevState)
     }
   };
 

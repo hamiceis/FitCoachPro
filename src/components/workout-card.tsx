@@ -13,12 +13,14 @@ import { Workouts } from "@/types/workout.types";
 import { api } from "@/services/api";
 import { toast } from "react-toastify";
 import { cn } from "@/lib/utils";
+import { Dispatch, SetStateAction } from "react";
 
 
 
 interface WorkoutCardProps {
   data: Workouts;
   index: number;
+  setForceRender: Dispatch<SetStateAction<boolean>>
 }
 
 export const weekdays = [
@@ -31,11 +33,12 @@ export const weekdays = [
   "Sábado",
 ];
 
-export function WorkoutCard({ data, index }: WorkoutCardProps) {
+export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
   const deleteExercise = async (id: string)=> {
     try {
      const response = await api.delete(`/exercise/${data.id}/${id}`)
      toast.success(response.data.message)
+     setForceRender(prevState => !prevState)
     } catch(error: any) {
       console.log(error.response.data)
       toast.error("Algo deu errado")
@@ -69,8 +72,8 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
             className="px-2 pt-1 mt-2 flex flex-col gap-1 border border-zinc-100"
             key={exercise.id}
           >
-            <div className="flex items-center justify-between">
-              <FormExercise actionType="Edit" exerciseId={exercise.id} exerciseData={exercise}>
+            <div className="flex flex-wrap items-center justify-between">
+              <FormExercise actionType="Edit" exerciseId={exercise.id} exerciseData={exercise} setForceRender={setForceRender}>
                 <Button className="p-3">
                   <Pencil size={16} />
                 </Button>
@@ -91,7 +94,7 @@ export function WorkoutCard({ data, index }: WorkoutCardProps) {
           </div>
         ))}
         <div className="w-full mt-2">
-          <FormExercise actionType="Create" workoutId={data.id}>
+          <FormExercise actionType="Create" workoutId={data.id} setForceRender={setForceRender} >
             <Button className="w-full flex gap-4">
               <Plus />
               Adicionar Exercício
