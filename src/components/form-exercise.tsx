@@ -87,10 +87,9 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       if(isEditing) {
-        const response = await api.post(`/exercise/${workoutId}/${exerciseId}`, {
+        const response = await api.patch(`/exercise/${workoutId}/${exerciseId}`, {
         ...values, 
         exerciseName: values.name_exercise,
-        load: parseFloat(values.load)
       })
         toast.success(response.data.message)
         form.reset()

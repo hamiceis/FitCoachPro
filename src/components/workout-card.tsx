@@ -15,8 +15,6 @@ import { toast } from "react-toastify";
 import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 
-
-
 interface WorkoutCardProps {
   data: Workouts;
   index: number;
@@ -73,7 +71,12 @@ export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
             key={exercise.id}
           >
             <div className="flex flex-wrap items-center justify-between">
-              <FormExercise actionType="Edit" exerciseId={exercise.id} exerciseData={exercise} setForceRender={setForceRender}>
+              <FormExercise 
+              actionType="Edit" 
+              workoutId={data.id}
+              exerciseId={exercise.id} 
+              exerciseData={exercise} 
+              setForceRender={setForceRender}>
                 <Button className="p-3">
                   <Pencil size={16} />
                 </Button>
@@ -94,7 +97,10 @@ export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
           </div>
         ))}
         <div className="w-full mt-2">
-          <FormExercise actionType="Create" workoutId={data.id} setForceRender={setForceRender} >
+          <FormExercise 
+           actionType="Create"
+           workoutId={data.id}
+           setForceRender={setForceRender} >
             <Button className="w-full flex gap-4">
               <Plus />
               Adicionar Exercício
