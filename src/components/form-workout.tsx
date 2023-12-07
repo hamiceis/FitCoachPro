@@ -41,12 +41,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { api } from "@/services/api";
 
 type FormData = {
   type?: string;
   weekDay?: number;
-  dayMonth?: string;
+  dateMonth?: string;
   exerciseName?: string;
   repetitions?: string;
   interval?: string;
@@ -97,7 +98,12 @@ const weekDays = {
   6: "Sábado",
 };
 
-export function FormWorkout() {
+interface FormWorkoutProps {
+  studentId: string;
+  forceRender: Dispatch<SetStateAction<boolean>>
+}
+
+export function FormWorkout({ studentId, forceRender }: FormWorkoutProps) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -116,23 +122,29 @@ export function FormWorkout() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     let data: FormData = {}
     for(let [key, value] of Object.entries(values)) {
-      if(key === "weekDay" || key === "load") {
+      if(key === "weekDay") {
         data[key] = parseFloat(value as string) 
       } else if (key === "dayMonth") {
-        data[key] = new Date(value).toISOString()
+        data.dateMonth = (value as Date).toISOString()
       } else {
         data[key] = value
       }
     }
-    
-    console.log(data)
 
-    form.reset();
-    toast.success("Treino criado com sucesso")
+    try {
+      await api.post(`/workout/${studentId}`, data)
+      toast.success("Treino criado com sucesso")
+      form.reset();
+    } catch (error: any) {
+      console.log(error.response)
+      toast.error("Something went wrong")
+    } finally {
+    forceRender(prevState => !prevState)
     setModalOpen(false)
+    }
   }
 
   const isLoading = form.formState.isSubmitting
