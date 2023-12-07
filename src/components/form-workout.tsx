@@ -43,6 +43,20 @@ import { cn } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
 import { useState } from "react";
 
+type FormData = {
+  type?: string;
+  weekDay?: number;
+  dayMonth?: string;
+  exerciseName?: string;
+  repetitions?: string;
+  interval?: string;
+  method?: string;
+  load?: number;
+  cadence?: string;
+  observation?: string;
+  [key: string]: string | number | Date | undefined
+}
+
 
 const formSchema = z.object({
   type: z.string().min(1, {
@@ -103,11 +117,25 @@ export function FormWorkout() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    let data: FormData = {}
+    for(let [key, value] of Object.entries(values)) {
+      if(key === "weekDay" || key === "load") {
+        data[key] = parseFloat(value as string) 
+      } else if (key === "dayMonth") {
+        data[key] = new Date(value).toISOString()
+      } else {
+        data[key] = value
+      }
+    }
+    
+    console.log(data)
+
     form.reset();
     toast.success("Treino criado com sucesso")
     setModalOpen(false)
   }
+
+  const isLoading = form.formState.isSubmitting
 
   return (
     <Dialog onOpenChange={setModalOpen} open={modalOpen}>
@@ -351,7 +379,11 @@ export function FormWorkout() {
                   />
                 </div>
                 <Separator className="bg-zinc-100/10 w-full" />
-                <Button type="submit" className="w-full">
+                <Button 
+                type="submit" 
+                className="w-full"
+                disabled={isLoading}
+                >
                   Criar
                 </Button>
               </form>

@@ -71,7 +71,14 @@ const initialForm = {
   observation: "",
 };
 
-export function FormExercise({ children, actionType, workoutId, exerciseId, exerciseData, setForceRender }: FormExerciseProps) {
+export function FormExercise({ 
+  children, 
+  actionType, 
+  workoutId, 
+  exerciseId, 
+  exerciseData, 
+  setForceRender 
+}: FormExerciseProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const isEditing = actionType === "Edit";
 
@@ -83,6 +90,8 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
       : initialForm
       ) as z.infer<typeof formSchema>
   });
+
+  const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -236,7 +245,11 @@ export function FormExercise({ children, actionType, workoutId, exerciseId, exer
                   />
                 </div>
                 <Separator className="bg-zinc-100/10 w-full" />
-                <Button type="submit" className="w-full">
+                <Button
+                 type="submit" 
+                 className="w-full"
+                 disabled={isLoading}
+                 >
                   {isEditing ? "Editar" : "Criar"}
                 </Button>
               </form>
