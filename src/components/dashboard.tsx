@@ -15,6 +15,7 @@ import { useUsersStore } from "@/hooks/useUsers";
 // import { useAuthTokenContext } from "@/hooks/useAuthToken";
 
 export function Dashboard() {
+  const [isMounted, setIsMounted] = useState(false)
   const [search, setSearch] = useState<string>("");
   // const { authToken } = useAuthTokenContext()
   const navigate = useNavigate();
@@ -24,11 +25,14 @@ export function Dashboard() {
 
   //UseEffect garante que os dados, sejam aguardados e passados para dentro do contexto do Zustand
   useEffect(() => {
+    setIsMounted(true)
     if (data) {
       setUsers(data);
     }
   }, [data, setUsers]);
  
+  //Evita que o componente seja montado em tela de forma desnecessária
+  if(!isMounted) return null
 
   const filterUsers =
     search.length > 0

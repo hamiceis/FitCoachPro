@@ -1,28 +1,38 @@
 import { Dumbbell, UserCircle2, Users, UserPlus } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/hooks/useAuth";
 
 const routes = [
   {
     icon: Users,
     href: "/dashboard",
     label: "Alunos",
+    role: "teacher",
   },
   {
     icon: Dumbbell,
     href: "/dashboard/workouts",
     label: "Treinos",
+    role: "student",
   },
   {
     icon: UserPlus,
     href: "/dashboard/invite",
     label: "Convidar",
+    role: "",
   },
 ];
 
 export function Sidebar() {
   const location = useLocation();
   const pathname = location.pathname;
+
+  const { authToken } = useAuthStore();
+
+  if (!authToken) {
+    return;
+  }
 
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-background_secondary text-white">
@@ -35,23 +45,25 @@ export function Sidebar() {
         </Link>
 
         <div className="space-y-1">
-          {routes.map((route) => (
-            <Link
-              key={route.href}
-              to={route.href}
-              className={cn(
-                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-                pathname === route.href
-                  ? "text-white bg-white/10"
-                  : "text-zinc-400"
-              )}
-            >
-              <div className="flex items-center flex-1">
-                <route.icon className={cn("h-5 w-5 mr-3")} />
-                {route.label}
-              </div>
-            </Link>
-          ))}
+          {routes.map((route) =>
+              (!route.role || authToken!.role === route.role) && (
+                <Link
+                  key={route.href}
+                  to={route.href}
+                  className={cn(
+                    "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                    pathname === route.href
+                      ? "text-white bg-white/10"
+                      : "text-zinc-400"
+                  )}
+                >
+                  <div className="flex items-center flex-1">
+                    <route.icon className={cn("h-5 w-5 mr-3")} />
+                    {route.label}
+                  </div>
+                </Link>
+              )
+          )}
         </div>
       </div>
 
@@ -59,7 +71,9 @@ export function Sidebar() {
         to="/dashboard/profile"
         className={cn(
           "text-sm mx-3 flex px-4 py-3 justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-          pathname === "/dashboard/profile" ? "text-white bg-white/10" : "text-zinc-400"
+          pathname === "/dashboard/profile"
+            ? "text-white bg-white/10"
+            : "text-zinc-400"
         )}
       >
         <UserCircle2 className={cn("h-5 w-5 mr-3")} />

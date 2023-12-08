@@ -3,7 +3,7 @@ import { MobileSidebar } from "./mobile-sidebar";
 import { api } from "@/services/api"
 
 interface HeaderPage {
-  id: string
+  id: string | undefined
 }
 
 interface UserData {

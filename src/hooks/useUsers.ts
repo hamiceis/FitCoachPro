@@ -12,3 +12,6 @@ export const useUsersStore = create<UsersStore>((set) => ({
   setUsers: (newUsers) => set({ users: newUsers }),
   getUsers: () => set((state) => ({ users: state.users}))
 }))
+
+
+//getUsers() é uma forma de pegar os dados diferente, mas não é necessário, basta usar const { users } = useUsersStore()

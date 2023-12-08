@@ -49,9 +49,9 @@ export function ButtonDeleteWorkout({ studentId, workoutId, setForceRender}: But
       <AlertDialogContent className="w-96 md:w-full">
 
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center">Deletar treino</AlertDialogTitle>
+          <AlertDialogTitle className="text-center text-2xl">Deletar treino</AlertDialogTitle>
           <AlertDialogDescription className="flex flex-col items-center py-4">
-            <span className="text-zinc-100">Você tem certeza que deseja exluir esse treino?</span>
+            <span className="text-zinc-100">Você tem certeza que deseja excluir esse treino?</span>
             <span className="text-red-500 font-bold ml-2">
               Está ação é irreversível, e deletará todos os exercícios.
             </span>

@@ -8,16 +8,27 @@ import { AuthTokenProps } from "@/types/authToken.types";
 
 import Cookies from "js-cookie";
 import { ContextType } from "@/types/OutletContextType.types";
+import { useAuthStore } from "@/hooks/useAuth";
 
 export function DashboardPage() {
   const [isMounted, setIsMounted] = useState(false);
-  const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null);
+  const [authToken, setAuthToken] = useState<AuthTokenProps | null>({
+    id: "a3a22e3f-1cc1-4685-85d9-b6db1cac2eda",
+    role: "teacher",
+    email: "abraham@hotmail.com"
+  });
+
+  const { setAuthToken: setToken } = useAuthStore()
 
   // const navigate = useNavigate();
 
   useEffect(() => {
     setIsMounted(true);
     const userAuthToken = Cookies.get("authToken");
+
+    if (authToken) {
+      setToken(authToken);
+    }
 
     //Evita que o usuário acesse outras páginas caso não tenha um authToken, redirecionando para página "/login"
     // if(!userAuthToken){
@@ -31,7 +42,7 @@ export function DashboardPage() {
     //     console.error("Error parsing authToken:", error);
     //   }
     // }
-  }, []);
+  }, [setToken, authToken]);
 
   if (!isMounted) {
     return null;
@@ -43,7 +54,7 @@ export function DashboardPage() {
         <Sidebar />
       </div>
       <div className="bg-zinc-600 h-max md:h-screen w-full md:py-0 p-4">
-        <Header id={authToken?.id || "a3a22e3f-1cc1-4685-85d9-b6db1cac2eda"}  />
+        <Header id={authToken?.id}  />
         <Outlet context={{ authToken } satisfies ContextType} />
       </div>
     </div>

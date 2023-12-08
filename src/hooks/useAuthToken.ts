@@ -1,4 +1,4 @@
-import { ContextType } from "@/pages/dashboard"
+import { ContextType } from "@/types/OutletContextType.types"
 import { useOutletContext } from "react-router-dom"
 
 

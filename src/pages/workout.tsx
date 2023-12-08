@@ -1,9 +1,21 @@
+import { useState, useEffect } from "react"
 import { arr }  from "@/lib/datafake"
 import { weekdays } from "@/components/workout-card"
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "react-router-dom";
+import { useAuthTokenContext } from "@/hooks/useAuthToken";
 
 export function Workout() {
+  const [isMounted, setIsMounted] = useState(false)
+  const { authToken } = useAuthTokenContext()
+  console.log(authToken)
+
+  useEffect(() => {
+    setIsMounted(true)
+  },[])
+
+  if(!isMounted) return null
+ 
   return (
     <ScrollArea className="mt-5 px-2 w-full h-[30rem] md:h-4/5 bg-zinc-900/30 shadow-md rounded-lg">
       <h1 className="text-center text-2xl font-bold mt-3">Treinos</h1>
