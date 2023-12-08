@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ButtonDeleteWorkout } from "@/components/button-deletedWorkout";
 
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { FormExercise } from "./form-exercise";
@@ -46,7 +47,7 @@ export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="p-2 border border-zinc-100 hover:bg-zinc-900 cursor-pointer transition-colors">
+        <div className="p-2 border border-zinc-100 hover:bg-zinc-900 cursor-pointer transition-colors relative">
           <div className="text-center flex flex-col font-light text-xs md:text-base">
             <span className="font-semibold">{index + 1}</span>
             <p>{weekdays[data.week_day]}</p>
@@ -60,11 +61,14 @@ export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
         </div>
       </PopoverTrigger>
 
-
-      
-      <PopoverContent className={cn("w-80 px-2 pt-0 pb-2 overflow-y-scroll",
+      <PopoverContent className={cn("w-80 px-2 pt-1 pb-2 overflow-y-scroll",
       data.exercises.length > 0 ? "h-80" : "h-fit"
       )}>
+        <ButtonDeleteWorkout 
+        workoutId={data.id}
+        studentId={data.studentId}
+        setForceRender={setForceRender}
+        />
         {data.exercises && data.exercises.map((exercise) => (
           <div
             className="px-2 pt-1 mt-2 flex flex-col gap-1 border border-zinc-100"

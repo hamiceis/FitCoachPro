@@ -352,7 +352,7 @@ export function FormWorkout({ studentId, forceRender }: FormWorkoutProps) {
                         <FormItem>
                           <FormLabel>Carga</FormLabel>
                           <FormControl>
-                            <Input placeholder="Leve" {...field} />
+                            <Input placeholder="5.4" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
