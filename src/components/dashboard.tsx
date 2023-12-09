@@ -33,7 +33,7 @@ export function Dashboard() {
   ? data!.filter((user: StudentProps) => user.name.toLowerCase().includes(search))
   : data;
 
-  if (error || !authToken) {
+  if (error) {
     alert("Ocorreu um error");
     setTimeout(() => {
       navigate("/login");

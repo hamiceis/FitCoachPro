@@ -13,8 +13,8 @@ import { useAuthStore } from "@/hooks/useAuth";
 export function DashboardPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [authToken, setAuthToken] = useState<AuthTokenProps | null>({
-    id: "a3a22e3f-1cc1-4685-85d9-b6db1cac2eda",
-    role: "teacher",
+    id: "79871a29-4bb7-442d-9032-0d03e816a252",
+    role: "student",
     email: "abraham@hotmail.com"
   });
 
@@ -58,7 +58,7 @@ export function DashboardPage() {
         <Sidebar />
       </div>
       <div className="bg-zinc-600 h-max md:h-screen w-full md:py-0 p-4">
-        <Header id={authToken?.id}  />
+        <Header id={authToken?.id} role={authToken?.role}  />
         <Outlet context={{ authToken } satisfies ContextType} />
       </div>
     </div>

@@ -3,7 +3,8 @@ import { MobileSidebar } from "./mobile-sidebar";
 import { api } from "@/services/api"
 
 interface HeaderPage {
-  id: string | undefined
+  id: string | undefined;
+  role: string | undefined;
 }
 
 interface UserData {
@@ -11,13 +12,19 @@ interface UserData {
   name: string;
 }
 
-export function Header({ id }: HeaderPage) {
+export function Header({ id, role }: HeaderPage) {
   const [data, setData] = useState<UserData[] | null>()
 
   useEffect(() => {
+    if(role === "teacher") {
     api.get(`/teachers`)
       .then(response => setData(response.data))
       .catch(error => console.log(error))
+    } else {
+      api.get("/students")
+      .then(response => setData(response.data))
+      .catch(error => console.log(error))
+    }
   },[])
 
   
