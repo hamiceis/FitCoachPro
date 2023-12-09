@@ -11,7 +11,7 @@ export function HeaderStudent({ data }: DataStudent) {
   const imageSrc = data?.gender === "F" ? "/woman-vetor.jpg" : "/man-vetor.jpg";
 
   return (
-    <header className="relative h-max md:h-max w-full px-10 py-5 flex items-center justify-center md:gap-32 gap-36 bg-black">
+    <header className="relative h-max md:h-max px-10 py-5 flex items-center justify-center md:gap-28 gap-32 bg-black">
       <Button
         variant="ghost"
         onClick={() => navigate(-1)}
