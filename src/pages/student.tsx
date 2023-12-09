@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useUsersStore } from "@/hooks/useUsers";
 
@@ -24,8 +24,6 @@ export function StudentPage() {
   const { users } = useUsersStore();
   const { id } = useParams();
 
-  if (!id) return redirect("/dashboard");
-
   const fetchWorkouts = async (id: string) => {
     try {
       setLoading(true);
@@ -48,7 +46,9 @@ export function StudentPage() {
   const user = data.find((u) => u.id === id) as StudentData
 
   if (error) {
-    return <h1>Erro ao carregar dados. Tente novamente mais tarde.</h1>;
+    return (
+      <h1>Erro ao carregar dados. Tente novamente mais tarde.</h1>
+    );
   }
 
   return (
@@ -64,7 +64,7 @@ export function StudentPage() {
       <main className="h-full py-4 px-4">
         <div className="flex justify-center items-center relative">
           <h1 className="text-3xl font-bold">Treinos</h1>
-          <FormWorkout studentId={id} forceRender={setForceRender} />
+          <FormWorkout studentId={id!} forceRender={setForceRender} />
         </div>
 
         {loading ? (
