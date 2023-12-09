@@ -11,42 +11,36 @@ import { CardStudent } from "./card-students";
 import { StudentData, StudentProps } from "@/types/student.types";
 import { useUsersStore } from "@/hooks/useUsers";
 
-
-// import { useAuthTokenContext } from "@/hooks/useAuthToken";
+import { useAuthTokenContext } from "@/hooks/useAuthToken";
 
 export function Dashboard() {
-  const [isMounted, setIsMounted] = useState(false)
   const [search, setSearch] = useState<string>("");
-  // const { authToken } = useAuthTokenContext()
   const navigate = useNavigate();
+
+  const { authToken } = useAuthTokenContext();
   const { setUsers } = useUsersStore();
 
   const { data, loading, error } = useFetch<StudentData[]>(`http://localhost:3000/students`);
 
   //UseEffect garante que os dados, sejam aguardados e passados para dentro do contexto do Zustand
   useEffect(() => {
-    setIsMounted(true)
     if (data) {
       setUsers(data);
     }
   }, [data, setUsers]);
- 
-  //Evita que o componente seja montado em tela de forma desnecessária
-  if(!isMounted) return null
 
-  const filterUsers =
-    search.length > 0
-      ? data!.filter((user: StudentProps) =>
-          user.name.toLowerCase().includes(search)
-        )
-      : data;
+  const filterUsers = search.length > 0 
+  ? data!.filter((user: StudentProps) => user.name.toLowerCase().includes(search))
+  : data;
 
-  if (error) {
+  if (error || !authToken) {
     alert("Ocorreu um error");
     setTimeout(() => {
       navigate("/login");
     }, 5000);
   }
+
+  if (authToken?.role === "student") return null;
 
   return (
     <div className="w-full py-2 flex flex-col space-y-4">

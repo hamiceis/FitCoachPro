@@ -40,6 +40,10 @@ export function DashboardPage() {
     //     setAuthToken(parsedAuthToken)
     //   } catch(error) {
     //     console.error("Error parsing authToken:", error);
+    //   } finally {
+    //     if(authToken.role === "student"){
+    //     navigate("/dashboard/workouts")
+    // }
     //   }
     // }
   }, [setToken, authToken]);

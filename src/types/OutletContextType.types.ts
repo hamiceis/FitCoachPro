@@ -1,3 +1,3 @@
 import { AuthTokenProps } from "./authToken.types";
 
-export type ContextType = { authToken: AuthTokenProps | null | string }
+export type ContextType = { authToken: AuthTokenProps | null }
