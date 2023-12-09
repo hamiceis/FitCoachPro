@@ -25,7 +25,10 @@ export function Workout() {
       <h1 className="text-center text-2xl font-bold mt-3">Treinos</h1>
 
       <div className="w-full h-max mt-3 px-3 py-3 rounded-lg gap-2 grid grid-cols-3 md:grid-cols-6 relative">
-        {loading ? (<h1 className="text-2xl font-bold absolute top-[100px] left-[10rem] md:left-[18rem] lg:left-[30rem] animate-pulse">Carregando</h1>) : (data?.map((workout: Workouts, i: number) => (
+        {loading 
+        ? (<h1 className="text-2xl font-bold absolute top-[100px] left-[10rem] md:left-[18rem] lg:left-[30rem] animate-pulse">
+          Carregando</h1>) 
+        : (data?.map((workout: Workouts, i: number) => (
          <Link
          to={`/exercises/${workout.id}`}
          key={i}
