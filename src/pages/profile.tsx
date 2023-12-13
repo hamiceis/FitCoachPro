@@ -1,3 +1,4 @@
+import { useState, useEffect} from "react"
 import {
   Form,
   FormField,
@@ -19,7 +20,8 @@ import {
 } from "@/components/ui/select";
 import { SelectContent } from "@radix-ui/react-select";
 import { toast } from "react-toastify";
-
+import { useAuthTokenContext } from "@/hooks/useAuthToken";
+import { ProfileStudentProps, ProfileTeacherProps } from "@/types/profileData";
 
 const formSchema = z
   .object({
@@ -39,25 +41,44 @@ const formSchema = z
   });
 
 const initialValues = {
-  name: "Hamiceis Pereira",
-  email: "hamiceis@hotmail.com",
+  name: "",
+  email: "",
   password: "",
   repassword: "",
-  age: 29,
-  height: 187,
-  tel: "(81)9.9845-1022",
-  gender: "M",
-  cref: "999999/99"
+  age: undefined,
+  height: undefined,
+  tel: "",
+  gender: "",
+  cref:"" 
 };
 
-type Role = "User" | "Teacher"
+type Role = "student" | "teacher"
 
 export function Profile() {
-  const role: Role = "User"
+  const [data, setData] = useState<ProfileStudentProps | ProfileTeacherProps | null>(null)
+  const { authToken } = useAuthTokenContext()
+  if(!authToken) return null
+
+  const role: Role = authToken!.role as Role
+
+  useEffect(() => {
+    if(role === "teacher") {
+      //fetch puxando dados do professor
+      // api.get(`teacher/${authToken.id}`)
+      // .then(response => setData(response.data))
+      // .catch((error: any) => console.log(error))
+    }
+    if(role === "student") {
+      //fetch puxando dados pessoais do aluno
+      // api.get(`student/${authToken.id}`)
+      // .then(response => setData(response.data))
+      // .catch(error: any => console.log(error))
+    }
+  }, [authToken])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialValues,
+    defaultValues: (role ? data : initialValues) as z.infer<typeof formSchema>
   });
 
   const isLoading = form.formState.isSubmitting;
@@ -167,7 +188,7 @@ export function Profile() {
                 </FormItem>
               )}
             />
-            {role === "User" ? (
+            {role === "student" ? (
               <>
                <FormField
                name="tel"
@@ -199,7 +220,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={initialValues.age.toString()}
+                       placeholder={(initialValues.age || "21")}
                        {...field}
                      />
                    </FormControl>
@@ -218,7 +239,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={initialValues.height.toString()}
+                       placeholder={initialValues.height || "189"}
                        {...field}
                      />
                    </FormControl>
