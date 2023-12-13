@@ -21,7 +21,9 @@ import {
 import { SelectContent } from "@radix-ui/react-select";
 import { toast } from "react-toastify";
 import { useAuthTokenContext } from "@/hooks/useAuthToken";
-import { ProfileStudentProps, ProfileTeacherProps } from "@/types/profileData";
+import { api } from "@/services/api"
+
+import { ProfileStudentProps } from "@/types/profileData";
 
 const formSchema = z
   .object({
@@ -29,8 +31,8 @@ const formSchema = z
     email: z.string().optional(),
     password: z.string().optional(),
     repassword: z.string().optional(),
-    age: z.number().optional(),
-    height: z.number().optional(),
+    age: z.string().optional(),
+    height: z.string().optional(),
     tel: z.string().optional(),
     gender: z.string().optional(),
     cref: z.string().optional()
@@ -45,8 +47,8 @@ const initialValues = {
   email: "",
   password: "",
   repassword: "",
-  age: undefined,
-  height: undefined,
+  age: "21",
+  height: "156",
   tel: "",
   gender: "",
   cref:"" 
@@ -55,39 +57,39 @@ const initialValues = {
 type Role = "student" | "teacher"
 
 export function Profile() {
-  const [data, setData] = useState<ProfileStudentProps | ProfileTeacherProps | null>(null)
+  const [data, setData] = useState<ProfileStudentProps | null>(null)
   const { authToken } = useAuthTokenContext()
+
   if(!authToken) return null
 
-  const role: Role = authToken!.role as Role
+  const role = authToken?.role as Role;
+
+  const fetchData = async () => {
+    try {
+      const response = await api.get(`${role}/${authToken.id}`);
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    if(role === "teacher") {
-      //fetch puxando dados do professor
-      // api.get(`teacher/${authToken.id}`)
-      // .then(response => setData(response.data))
-      // .catch((error: any) => console.log(error))
-    }
-    if(role === "student") {
-      //fetch puxando dados pessoais do aluno
-      // api.get(`student/${authToken.id}`)
-      // .then(response => setData(response.data))
-      // .catch(error: any => console.log(error))
-    }
+    fetchData()
   }, [authToken])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: (role ? data : initialValues) as z.infer<typeof formSchema>
   });
+  
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const filterData: Record<string, string | number> = {}
     for(let [key, value] of Object.entries(data)){
-      if(value !== '' && value !== undefined){
-        filterData[key] = value
+      if (value !== undefined && value !== '') {
+        filterData[key] = key === 'height' || key === 'age' ? Number(value) : value;
       }
     }
 
@@ -117,10 +119,11 @@ export function Profile() {
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
                     <Input
+                      type="text"
                       autoComplete="username"
                       disabled={isLoading}
                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                      placeholder={initialValues.name}
+                      placeholder={role ? data?.name : initialValues.name}
                       {...field}
                     />
                   </FormControl>
@@ -140,7 +143,7 @@ export function Profile() {
                       type="email"
                       autoComplete="email-current"
                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                      placeholder={initialValues.email}
+                      placeholder={role ? data?.email : initialValues.email}
                       {...field}
                     />
                   </FormControl>
@@ -201,7 +204,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={initialValues.tel}
+                       placeholder={role ? data?.tel : initialValues.tel}
                        {...field}
                      />
                    </FormControl>
@@ -220,7 +223,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={(initialValues.age || "21")}
+                       placeholder={(role ? data?.age.toString() : initialValues.age)}
                        {...field}
                      />
                    </FormControl>
@@ -239,7 +242,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={initialValues.height || "189"}
+                       placeholder={role ? data?.height.toString() : initialValues.height}
                        {...field}
                      />
                    </FormControl>
@@ -289,7 +292,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={initialValues.cref}
+                       placeholder={role ? data?.cref : initialValues.cref}
                        {...field}
                      />
                    </FormControl>
