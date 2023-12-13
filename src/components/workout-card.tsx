@@ -33,6 +33,7 @@ export const weekdays = [
 ];
 
 export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
+  console.log(data)
   const deleteExercise = async (id: string)=> {
     try {
      const response = await api.delete(`/exercise/${data.id}/${id}`)
@@ -42,7 +43,6 @@ export function WorkoutCard({ data, index, setForceRender }: WorkoutCardProps) {
       console.log(error.response.data)
       toast.error("Algo deu errado")
     }
-
   }
   return (
     <Popover>

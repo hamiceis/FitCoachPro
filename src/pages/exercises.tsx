@@ -3,11 +3,20 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftCircle } from "lucide-react";
 
-import { exercicios } from "@/lib/exercicioFake";
+import { useFetch } from "@/hooks/useFetch";
+import { Exercises } from "@/types/exercise.type";
 
 export function ExercisesPage() {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const { loading, data, error } = useFetch<Exercises[]>(`http://localhost:3000/exercise/${id}`)
+
+  if (error) {
+    return <h1>Tente novamente mais tarde</h1>
+  }
+
+  const exercisesFound = data && data.length > 0;
 
   return (
     <ScrollArea className="bg-zinc-600 h-screen w-full px-2">
@@ -24,7 +33,10 @@ export function ExercisesPage() {
 
       <div className="mt-5 px-2 py-3 flex flex-col">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          {exercicios.map((exercise) => {
+          {loading && <h1>Carregando...</h1>}
+          {!loading && !exercisesFound && <p>Não foram encontrados exercícios.</p>}
+
+          {exercisesFound && data?.map((exercise) => {
             return (
               <div
                 className="px-2 py-3 bg-black h-96 rounded-lg flex flex-col space-y-6 border-2 border-zinc-100 hover:border-2 hover:border-primary transition-colors"
@@ -65,8 +77,8 @@ export function ExercisesPage() {
                   </p>
                   <p className="mt-5">
                     Observações:
-                    <span className="ml-2 font-extralight text-red-500">
-                      {exercise?.observation}
+                    <span className="ml-2 font-extralight italic text-foreground text-red-500">
+                      {exercise?.observation || "Nenhuma observação"}
                     </span>
                   </p>
                 </div>
