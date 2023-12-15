@@ -20,7 +20,7 @@ export function DashboardPage() {
 
   const { setAuthToken: setToken } = useAuthStore()
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsMounted(true);
@@ -29,6 +29,8 @@ export function DashboardPage() {
     if (authToken) {
       setToken(authToken);
     }
+
+    if(authToken?.role === "student") navigate("/dashboard/workouts")
 
     //Evita que o usuário acesse outras páginas caso não tenha um authToken, redirecionando para página "/login"
     // if(!userAuthToken){

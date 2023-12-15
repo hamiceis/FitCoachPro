@@ -105,7 +105,7 @@ export function Profile() {
       toast.error("Ocorreu erro ao atualizar os dados")
     }
   };
-  
+
   return (
     <div className="w-full mt-4 p-2 h-max space-y-4 rounded-lg bg-zinc-900/30 shadow-md">
       <h1 className="text-center text-2xl font-bold">Dados Pessoais</h1>
@@ -274,7 +274,7 @@ export function Profile() {
                          />
                        </SelectTrigger>
                      </FormControl>
-                     <SelectContent className="bg-black rounded-md">
+                     <SelectContent className="bg-black rounded-md w-20">
                        <SelectItem value="M">M</SelectItem>
                        <SelectItem value="F">F</SelectItem>
                      </SelectContent>
