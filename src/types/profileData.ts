@@ -3,7 +3,7 @@ export interface ProfileStudentProps {
   email: string;
   age: number;
   height: number;
-  tel?: string;
+  tel?: string | null;
   gender: string;
   cref?: string;
 }

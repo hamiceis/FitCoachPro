@@ -17,13 +17,17 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent
 } from "@/components/ui/select";
-import { SelectContent } from "@radix-ui/react-select";
+
 import { toast } from "react-toastify";
 import { useAuthTokenContext } from "@/hooks/useAuthToken";
+import { formatTel } from "@/lib/formatTel";
+
 import { api } from "@/services/api"
 
 import { ProfileStudentProps } from "@/types/profileData";
+
 
 const formSchema = z
   .object({
@@ -47,8 +51,8 @@ const initialValues = {
   email: "",
   password: "",
   repassword: "",
-  age: "21",
-  height: "156",
+  age: "",
+  height: "",
   tel: "",
   gender: "",
   cref:"" 
@@ -79,7 +83,7 @@ export function Profile() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: (role ? data : initialValues) as z.infer<typeof formSchema>
+    defaultValues: initialValues,
   });
   
 
@@ -101,6 +105,7 @@ export function Profile() {
       toast.error("Ocorreu erro ao atualizar os dados")
     }
   };
+  
   return (
     <div className="w-full mt-4 p-2 h-max space-y-4 rounded-lg bg-zinc-900/30 shadow-md">
       <h1 className="text-center text-2xl font-bold">Dados Pessoais</h1>
@@ -123,7 +128,7 @@ export function Profile() {
                       autoComplete="username"
                       disabled={isLoading}
                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                      placeholder={role ? data?.name : initialValues.name}
+                      placeholder={data?.name}
                       {...field}
                     />
                   </FormControl>
@@ -143,7 +148,7 @@ export function Profile() {
                       type="email"
                       autoComplete="email-current"
                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                      placeholder={role ? data?.email : initialValues.email}
+                      placeholder={data?.email}
                       {...field}
                     />
                   </FormControl>
@@ -204,7 +209,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={role ? data?.tel : initialValues.tel}
+                       placeholder={formatTel((data && data.tel) ? data.tel.toString() : "" || "(11)99999-9999")}
                        {...field}
                      />
                    </FormControl>
@@ -223,7 +228,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={(role ? data?.age.toString() : initialValues.age)}
+                       placeholder={data?.age.toString()}
                        {...field}
                      />
                    </FormControl>
@@ -242,7 +247,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={role ? data?.height.toString() : initialValues.height}
+                       placeholder={data?.height.toString()}
                        {...field}
                      />
                    </FormControl>
@@ -292,7 +297,7 @@ export function Profile() {
                        disabled={isLoading}
                        type="text"
                        className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={role ? data?.cref : initialValues.cref}
+                       placeholder={data?.cref}
                        {...field}
                      />
                    </FormControl>
