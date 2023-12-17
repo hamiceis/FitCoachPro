@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react";
 import {
   Form,
   FormField,
@@ -17,17 +17,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectContent
+  SelectContent,
 } from "@/components/ui/select";
 
 import { toast } from "react-toastify";
 import { useAuthTokenContext } from "@/hooks/useAuthToken";
 import { formatTel } from "@/lib/formatTel";
 
-import { api } from "@/services/api"
+import { api } from "@/services/api";
 
 import { ProfileStudentProps } from "@/types/profileData";
-
 
 const formSchema = z
   .object({
@@ -39,7 +38,7 @@ const formSchema = z
     height: z.string().optional(),
     tel: z.string().optional(),
     gender: z.string().optional(),
-    cref: z.string().optional()
+    cref: z.string().optional(),
   })
   .refine((data) => data.password === data.repassword, {
     message: "As senhas não coincidem",
@@ -55,16 +54,17 @@ const initialValues = {
   height: "",
   tel: "",
   gender: "",
-  cref:"" 
+  cref: "",
 };
 
-type Role = "student" | "teacher"
+type Role = "student" | "teacher";
 
 export function Profile() {
-  const [data, setData] = useState<ProfileStudentProps | null>(null)
-  const { authToken } = useAuthTokenContext()
+  const [data, setData] = useState<ProfileStudentProps | null>(null);
+  const [loading, setLoading] = useState(false);
+  const { authToken } = useAuthTokenContext();
 
-  if(!authToken) return null
+  if (!authToken) return null;
 
   const role = authToken?.role as Role;
 
@@ -78,31 +78,39 @@ export function Profile() {
   };
 
   useEffect(() => {
-    fetchData()
-  }, [authToken])
+    fetchData();
+  }, [authToken, loading]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
   });
-  
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const filterData: Record<string, string | number> = {}
-    for(let [key, value] of Object.entries(data)){
-      if (value !== undefined && value !== '') {
-        filterData[key] = key === 'height' || key === 'age' ? Number(value) : value;
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const filterData: Record<string, string | number> = {};
+    for (let [key, value] of Object.entries(data)) {
+      if (value !== undefined && value !== "") {
+        filterData[key] =
+          key === "height" || key === "age" ? Number(value) : value;
       }
     }
 
     try {
-      console.log(filterData)
-      toast.success("Dados atualizados com sucesso")
-    }catch(error) {
-      console.log(error)
-      toast.error("Ocorreu erro ao atualizar os dados")
+      if (role === "student") {
+        api.put(`student/${authToken.id}`, filterData);
+        toast.success("Dados atualizados com sucesso!");
+      } else {
+        api.put(`teacher/${authToken.id}`, filterData);
+        toast.success("Dados atualizados com sucesso!");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Ocorreu erro ao atualizar os dados");
+    } finally {
+      form.reset();
+      setLoading(prevState => !prevState);
     }
   };
 
@@ -198,117 +206,126 @@ export function Profile() {
             />
             {role === "student" ? (
               <>
-               <FormField
-               name="tel"
-               control={form.control}
-               render={({ field }) => (
-                 <FormItem>
-                   <FormLabel>Telefone</FormLabel>
-                   <FormControl>
-                     <Input
-                       disabled={isLoading}
-                       type="text"
-                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={formatTel((data && data.tel) ? data.tel.toString() : "" || "(11)99999-9999")}
-                       {...field}
-                     />
-                   </FormControl>
-                   <FormMessage />
-                 </FormItem>
-               )}
-             />
-             <FormField
-               name="age"
-               control={form.control}
-               render={({ field }) => (
-                 <FormItem>
-                   <FormLabel>Idade</FormLabel>
-                   <FormControl>
-                     <Input
-                       disabled={isLoading}
-                       type="text"
-                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={data?.age.toString()}
-                       {...field}
-                     />
-                   </FormControl>
-                   <FormMessage />
-                 </FormItem>
-               )}
-             />
-             <FormField
-               name="height"
-               control={form.control}
-               render={({ field }) => (
-                 <FormItem>
-                   <FormLabel>Altura</FormLabel>
-                   <FormControl>
-                     <Input
-                       disabled={isLoading}
-                       type="text"
-                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={data?.height.toString()}
-                       {...field}
-                     />
-                   </FormControl>
-                   <FormMessage />
-                 </FormItem>
-               )}
-             />
-             <FormField
-               name="gender"
-               control={form.control}
-               render={({ field }) => (
-                 <FormItem>
-                   <FormLabel>Sexo</FormLabel>
-                   <Select
-                     onValueChange={field.onChange}
-                     value={field.value}
-                     defaultValue={field.value}
-                   >
-                     <FormControl>
-                       <SelectTrigger className="border border-zinc-100/10 ring:outline-none focus:ring-zinc-100 hover:cursor-pointer">
-                         <SelectValue
-                           defaultValue={field.value}
-                           placeholder="Selecione seu sexo"
-                         />
-                       </SelectTrigger>
-                     </FormControl>
-                     <SelectContent className="bg-black rounded-md w-20">
-                       <SelectItem value="M">M</SelectItem>
-                       <SelectItem value="F">F</SelectItem>
-                     </SelectContent>
-                   </Select>
-                   <FormMessage />
-                 </FormItem>
-               )}
-             />
-            </>
-            ): (
+                <FormField
+                  name="tel"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Telefone</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          type="text"
+                          className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
+                          placeholder={formatTel(
+                            data && data.tel
+                              ? data.tel.toString()
+                              : "" || "(11)99999-9999"
+                          )}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="age"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Idade</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          type="text"
+                          className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
+                          placeholder={data?.age.toString()}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="height"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Altura</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          type="text"
+                          className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
+                          placeholder={data?.height.toString()}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="gender"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sexo</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="border border-zinc-100/10 ring:outline-none focus:ring-zinc-100 hover:cursor-pointer">
+                            <SelectValue
+                              defaultValue={field.value}
+                              placeholder="Selecione seu sexo"
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-black rounded-md w-20">
+                          <SelectItem value="M">M</SelectItem>
+                          <SelectItem value="F">F</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            ) : (
               <>
-              <FormField
-               name="cref"
-               control={form.control}
-               render={({ field }) => (
-                 <FormItem>
-                   <FormLabel>Cref</FormLabel>
-                   <FormControl>
-                     <Input
-                       disabled={isLoading}
-                       type="text"
-                       className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
-                       placeholder={data?.cref}
-                       {...field}
-                     />
-                   </FormControl>
-                   <FormMessage />
-                 </FormItem>
-               )}
-             />
-             <div></div>
+                <FormField
+                  name="cref"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cref</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          type="text"
+                          className="border border-zinc-100/10 ring:outline-none focus-visible:ring-zinc-100"
+                          placeholder={data?.cref}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div></div>
               </>
             )}
-            <Button className="md:w-40" type="submit" variant="secondary">
+            <Button
+              disabled={isLoading}
+              className="md:w-40"
+              type="submit"
+              variant="secondary"
+            >
               Atualizar dados
             </Button>
           </form>
