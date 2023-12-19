@@ -28,8 +28,7 @@ import { api } from "@/services/api";
 
 import { ProfileStudentProps } from "@/types/profileData";
 
-const formSchema = z
-  .object({
+const formSchema = z.object({
     name: z.string().optional(),
     email: z.string().optional(),
     password: z.string().optional(),
