@@ -40,7 +40,7 @@ export function Dashboard() {
     }, 5000);
   }
 
-  if (authToken?.role === "student") return null;
+  if (authToken?.role === "user") return null;
 
   return (
     <div className="w-full py-2 flex flex-col space-y-4">

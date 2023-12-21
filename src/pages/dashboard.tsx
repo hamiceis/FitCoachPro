@@ -5,54 +5,26 @@ import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
 
 import { AuthTokenProps } from "@/types/authToken.types";
-
-import Cookies from "js-cookie";
 import { ContextType } from "@/types/OutletContextType.types";
-import { useAuthStore } from "@/hooks/useAuth";
+
+import { toast } from "react-toastify";
+import { useAuthStore } from "@/hooks/useAuth"
 
 export function DashboardPage() {
-  const [isMounted, setIsMounted] = useState(false);
-  const [authToken, setAuthToken] = useState<AuthTokenProps | null>({
-    id: "79871a29-4bb7-442d-9032-0d03e816a252",
-    role: "student",
-    email: "abraham@hotmail.com"
-  });
-
-  const { setAuthToken: setToken } = useAuthStore()
+  const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null);
+  const { authToken: token } = useAuthStore()
 
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
-    setIsMounted(true);
-    const userAuthToken = Cookies.get("authToken");
-
-    if (authToken) {
-      setToken(authToken);
+    if (!token) {
+      navigate("/login")
+      toast.error("Usuário não logado")
     }
 
-    if(authToken?.role === "student") navigate("/dashboard/workouts")
-
-    //Evita que o usuário acesse outras páginas caso não tenha um authToken, redirecionando para página "/login"
-    // if(!userAuthToken){
-    //   alert("Usuário não autenticado")
-    //   return navigate("/login")
-    // } else {
-    //   try {
-    //     const parsedAuthToken: AuthTokenProps = JSON.parse(userAuthToken)
-    //     setAuthToken(parsedAuthToken)
-    //   } catch(error) {
-    //     console.error("Error parsing authToken:", error);
-    //   } finally {
-    //     if(authToken.role === "student"){
-    //     navigate("/dashboard/workouts")
-    // }
-    //   }
-    // }
-  }, [setToken, authToken]);
-
-  if (!isMounted) {
-    return null;
-  }
+    if(token?.role === "user") navigate("/dashboard/workouts")
+    setAuthToken(token);
+  }, []);
 
   return (
     <div className="h-screen w-full flex">

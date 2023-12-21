@@ -56,7 +56,7 @@ const initialValues = {
   cref: "",
 };
 
-type Role = "student" | "teacher";
+type Role = "user" | "admin";
 
 export function Profile() {
   const [data, setData] = useState<ProfileStudentProps | null>(null);
@@ -69,8 +69,13 @@ export function Profile() {
 
   const fetchData = async () => {
     try {
-      const response = await api.get(`${role}/${authToken.id}`);
-      setData(response.data);
+      if(role === "user") {
+        const response = await api.get(`student/${authToken.id}`);
+        setData(response.data);
+      } else {
+        const response = await api.get(`teacher/${authToken.id}`);
+        setData(response.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +102,7 @@ export function Profile() {
     }
 
     try {
-      if (role === "student") {
+      if (role === "user") {
         api.put(`student/${authToken.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       } else {
@@ -203,7 +208,7 @@ export function Profile() {
                 </FormItem>
               )}
             />
-            {role === "student" ? (
+            {role === "user" ? (
               <>
                 <FormField
                   name="tel"

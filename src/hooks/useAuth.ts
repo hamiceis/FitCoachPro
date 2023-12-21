@@ -3,11 +3,11 @@ import { AuthTokenProps } from "@/types/authToken.types"
 
 
 interface UseAuthStoreProps {
-  authToken: AuthTokenProps | undefined;
+  authToken: AuthTokenProps | null;
   setAuthToken: (data: AuthTokenProps) => void;
 }
 
 export const useAuthStore = create<UseAuthStoreProps>((set) => ({
-  authToken: undefined,
+  authToken: null,
   setAuthToken: (data) => set({ authToken: data }),
 }));

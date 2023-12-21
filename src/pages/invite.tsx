@@ -29,7 +29,7 @@ const formSchema = z.object({
     }),
 });
 
-type Role = "student" | "teacher";
+type Role = "user" | "admin";
 
 export function InvitePage() {
   const { authToken } = useAuthTokenContext();
@@ -48,7 +48,7 @@ export function InvitePage() {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      if (role === "student") {
+      if (role === "user") {
         await api.post(`student/connect/${authToken?.id}`, data);
         toast({
           title: "Solicitação enviada para o professor",
@@ -74,13 +74,13 @@ export function InvitePage() {
       form.reset();
     }
   };
-
+  
   return (
     <div className="h-[32.3rem] md:h-[32.4rem] flex items-center justify-center">
       <div className="px-4 py-6 w-[25rem] rounded-lg flex flex-col items-center bg-zinc-900/30 shadow-md">
         <h1 className="text-base font-semibold text-zinc-100">
           Informe o <span className="text-primary text-base">Email</span> do seu{" "}
-          {role === "student" ? "professor" : "aluno"} para adicionar
+          {role === "user" ? "professor" : "aluno"} para adicionar
         </h1>
 
         <div className="w-full">

@@ -8,13 +8,13 @@ const routes = [
     icon: Users,
     href: "/dashboard",
     label: "Alunos",
-    role: "teacher",
+    role: "admin",
   },
   {
     icon: Dumbbell,
     href: "/dashboard/workouts",
     label: "Treinos",
-    role: "student",
+    role: "user",
   },
   {
     icon: UserPlus,
