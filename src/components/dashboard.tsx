@@ -20,7 +20,7 @@ export function Dashboard() {
   const { authToken } = useAuthTokenContext();
   const { setUsers } = useUsersStore();
 
-  const { data, loading, error } = useFetch<StudentData[]>(`http://localhost:3000/students`);
+  const { data, loading, error } = useFetch<StudentData[]>(`/students`);
 
   //UseEffect garante que os dados, sejam aguardados e passados para dentro do contexto do Zustand
   useEffect(() => {

@@ -7,24 +7,38 @@ import { Sidebar } from "@/components/sidebar";
 import { AuthTokenProps } from "@/types/authToken.types";
 import { ContextType } from "@/types/OutletContextType.types";
 
+import Cookies from "js-cookie"
+
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/hooks/useAuth"
 
 export function DashboardPage() {
   const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null);
-  const { authToken: token } = useAuthStore()
+  const { setAuthToken: setAuth } = useAuthStore()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const auth = Cookies.get("authToken")
  
   useEffect(() => {
-    if (!token) {
+    if (!auth) {
       navigate("/login")
       toast.error("Usuário não logado")
+    } else {
+      try {
+        const data = JSON.parse(auth)
+        setAuthToken(data)
+        setAuth(data)
+      } catch(error: any) {
+        console.log("Não foi possível acessar seus dados", error)
+      } finally {
+        if(authToken?.role === "user") {
+          navigate("/dashboard/workouts")
+        }
+      }
     }
 
-    if(token?.role === "user") navigate("/dashboard/workouts")
-    setAuthToken(token);
-  }, []);
+    
+  }, [auth]);
 
   return (
     <div className="h-screen w-full flex">

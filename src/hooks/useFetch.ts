@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import { api } from "@/services/api";
 
 interface FetchResult<T> {
   data: T | undefined;
@@ -13,23 +13,15 @@ export function useFetch<T>(url: string): FetchResult<T> {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
-
     async function fetchData() {
       try {
-        const response = await axios.get<T>(url);
-        if (isMounted) {
+        const response = await api.get<T>(url);
           setData(response.data);
           setError(null); // Limpar o erro em caso de sucesso
-        }
       } catch (error: any) {
-        if (isMounted) {
           setError(error.response?.data.message || 'Erro na solicitação');
-        }
       } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+        setLoading(false)
       }
     }
 
@@ -37,11 +29,9 @@ export function useFetch<T>(url: string): FetchResult<T> {
       fetchData();
     }
 
-    return () => {
-      isMounted = false;
-    };
   }, [url]);
 
+ 
   return {
     data,
     error,

@@ -21,12 +21,13 @@ import {
 } from "@/components/ui/select";
 
 import { toast } from "react-toastify";
-import { useAuthTokenContext } from "@/hooks/useAuthToken";
+
 import { formatTel } from "@/lib/formatTel";
 
 import { api } from "@/services/api";
 
 import { ProfileStudentProps } from "@/types/profileData";
+import { useAuthStore } from "@/hooks/useAuth";
 
 const formSchema = z.object({
     name: z.string().optional(),
@@ -59,21 +60,19 @@ const initialValues = {
 type Role = "user" | "admin";
 
 export function Profile() {
+  const { authToken } = useAuthStore()
   const [data, setData] = useState<ProfileStudentProps | null>(null);
   const [loading, setLoading] = useState(false);
-  const { authToken } = useAuthTokenContext();
-
-  if (!authToken) return null;
 
   const role = authToken?.role as Role;
 
   const fetchData = async () => {
     try {
       if(role === "user") {
-        const response = await api.get(`student/${authToken.id}`);
+        const response = await api.get(`student/${authToken?.id}`);
         setData(response.data);
       } else {
-        const response = await api.get(`teacher/${authToken.id}`);
+        const response = await api.get(`teacher/${authToken?.id}`);
         setData(response.data);
       }
     } catch (error) {
@@ -103,10 +102,10 @@ export function Profile() {
 
     try {
       if (role === "user") {
-        api.put(`student/${authToken.id}`, filterData);
+        api.put(`student/${authToken?.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       } else {
-        api.put(`teacher/${authToken.id}`, filterData);
+        api.put(`teacher/${authToken?.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       }
     } catch (error) {

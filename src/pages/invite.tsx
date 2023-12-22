@@ -35,8 +35,6 @@ export function InvitePage() {
   const { authToken } = useAuthTokenContext();
   const { toast } = useToast();
 
-  if (!authToken) return null;
-
   const role = authToken?.role as Role;
 
   const form = useForm<z.infer<typeof formSchema>>({

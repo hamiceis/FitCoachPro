@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 
 import { toast } from "react-toastify";
 import { api } from "@/services/api";
-import { useAuthStore } from "@/hooks/useAuth";
+
 
 const formSchama = z.object({
   email: z.string().email({
@@ -29,7 +29,6 @@ const formSchama = z.object({
 });
 
 export function FormLogin() {
-  const { setAuthToken } = useAuthStore()
    const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchama>>({
@@ -44,10 +43,9 @@ export function FormLogin() {
 
   const onSubmit = async (data: z.infer<typeof formSchama>) => {
     try {
-      const response = await api.post("/login", data)
+      await api.post("/login", data)
       toast.success("Logado com sucesso")
       navigate("/dashboard")
-      setAuthToken(JSON.parse(response.data.token))
     }catch(error) {
       toast.error("E-mail ou senha inválidos")
       console.log("[LOGIN_ERROR]", error)

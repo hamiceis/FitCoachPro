@@ -10,7 +10,7 @@ export function ExercisesPage() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { loading, data, error } = useFetch<Exercises[]>(`http://localhost:3000/exercise/${id}`)
+  const { loading, data, error } = useFetch<Exercises[]>(`exercise/${id}`)
 
   if (error) {
     return <h1>Tente novamente mais tarde</h1>

@@ -1,23 +1,31 @@
-import { weekdays } from "@/components/workout-card"
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Link } from "react-router-dom";
 import { useAuthTokenContext } from "@/hooks/useAuthToken";
 import { useFetch } from "@/hooks/useFetch";
+import { Link } from "react-router-dom";
+
+import { weekdays } from "@/components/workout-card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Workouts } from "@/types/workout.types";
 
+
 export function Workout() {
-  const { authToken } = useAuthTokenContext()
+  const { authToken } = useAuthTokenContext();
+
+  const { data, error, loading } = useFetch<Workouts[]>(`workouts/${authToken?.id}`)
   
-  if(!authToken && authToken!.role === "teacher") return null
-
-  const { data, loading, error } = useFetch<Workouts[]>(`http://localhost:3000/workouts/${authToken?.id}`)
-
-  if(error) {
+  if (authToken?.role === "teacher") {
     return (
       <div className="h-3/4 flex justify-center items-center">
-        <h1 className="font-bold text-3xl italic text-zinc-100">Não foi possivel carregar os dados</h1>
+        <h1 className="font-bold text-3xl italic text-zinc-100">Você não tem autorização para acessar essa página</h1>
       </div>
     )
+  }
+
+  if (error) {
+    return (
+      <div className="h-3/4 flex justify-center items-center">
+        <h1 className="font-bold text-3xl italic text-zinc-100">Não foi possível carregar os dados</h1>
+      </div>
+    );
   }
 
   return (
