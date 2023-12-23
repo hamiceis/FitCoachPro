@@ -27,7 +27,7 @@ export function StudentPage() {
   const fetchWorkouts = async (id: string) => {
     try {
       setLoading(true);
-      const response = await api.get(`/workouts/${id}`);
+      const response = await api.get(`workouts/${id}`);
       setWorkouts(response.data);
     } catch (err: any) {
       setError(err);
@@ -38,11 +38,16 @@ export function StudentPage() {
 
   useEffect(() => {
     if (users && id) {
-      setData(users);
       fetchWorkouts(id);
+      setData(users)
+    }
+    if(users.length === 0) {
+      api.get("teacher/students")
+       .then(response => setData(response.data))
+       .catch((error: any) => console.log(error))
     }
   }, [users, id, forceRender]);
-
+  
   const user = data.find((u) => u.id === id) as StudentData
 
   if (error) {

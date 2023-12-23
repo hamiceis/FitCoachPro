@@ -1,34 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState ,useEffect } from "react";
 import { MobileSidebar } from "./mobile-sidebar";
-import { api } from "@/services/api"
+import { AuthTokenProps } from "@/types/authToken.types";
+import { StudentData } from "@/types/student.types";
+import { api } from "@/services/api";
 
-interface HeaderPage {
-  id: string | undefined;
-  role: string | undefined;
+interface HeaderProps {
+  data: AuthTokenProps 
 }
 
-interface UserData {
-  id: string;
-  name: string;
-}
-
-export function Header({ id, role }: HeaderPage) {
-  const [data, setData] = useState<UserData[] | null>()
-
+export function Header({ data }: HeaderProps) {
+  const [students, setStudents] = useState<StudentData[] | null>()
   useEffect(() => {
-    if(role === "admin") {
-    api.get(`/teachers`)
-      .then(response => setData(response.data))
-      .catch(error => console.log(error))
-    } else {
-      api.get("/students")
-      .then(response => setData(response.data))
-      .catch(error => console.log(error))
+    if(!data) {
+      return
     }
-  },[])
+    if(data.role === "admin") {
+      try {
+        api.get("/teachers")
+          .then(response => setStudents(response.data))
+      } catch(error: any) {
+        console.log(error)
+      }
+    } else {
+      try {
+        api.get("/students")
+          .then(response => setStudents(response.data))
+      } catch(error: any) {
+        console.log(error)
+      }
+    }
+  }, [data])
 
-  
-  const user = data?.find((user: UserData) => user.id === id)
+  const user = students?.find((user) => user.id === data.id)
 
   return (
     <div className="w-full flex flex-col px-2 py-4 md:py-7 border-b border-zinc-100 gap-2">

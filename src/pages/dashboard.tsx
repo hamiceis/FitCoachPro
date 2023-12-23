@@ -30,15 +30,14 @@ export function DashboardPage() {
         setAuth(data)
       } catch(error: any) {
         console.log("Não foi possível acessar seus dados", error)
-      } finally {
-        if(authToken?.role === "user") {
-          navigate("/dashboard/workouts")
-        }
       }
     }
 
-    
+    if(authToken?.role === "user") {
+      navigate("/dashboard/workouts")
+    }
   }, [auth]);
+
 
   return (
     <div className="h-screen w-full flex">
@@ -46,7 +45,7 @@ export function DashboardPage() {
         <Sidebar />
       </div>
       <div className="bg-zinc-600 h-max md:h-screen w-full md:py-0 p-4">
-        <Header id={authToken?.id} role={authToken?.role}  />
+        <Header data={authToken!}  />
         <Outlet context={{ authToken } satisfies ContextType} />
       </div>
     </div>

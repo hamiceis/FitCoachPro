@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { useFetch } from "@/hooks/useFetch";
 
@@ -15,29 +14,25 @@ import { useAuthTokenContext } from "@/hooks/useAuthToken";
 
 export function Dashboard() {
   const [search, setSearch] = useState<string>("");
-  const navigate = useNavigate();
 
   const { authToken } = useAuthTokenContext();
   const { setUsers } = useUsersStore();
 
-  const { data, loading, error } = useFetch<StudentData[]>(`/students`);
-
+  const { data, loading, error } = useFetch<StudentData[]>(`teacher/students`);
   //UseEffect garante que os dados, sejam aguardados e passados para dentro do contexto do Zustand
   useEffect(() => {
-    if (data) {
-      setUsers(data);
+    if(!authToken && !data) {
+      return
     }
-  }, [data, setUsers]);
-
+    setUsers(data!);
+  }, [authToken, data]);
+  
   const filterUsers = search.length > 0 
   ? data!.filter((user: StudentProps) => user.name.toLowerCase().includes(search))
   : data;
 
   if (error) {
-    alert("Ocorreu um error");
-    setTimeout(() => {
-      navigate("/login");
-    }, 5000);
+    console.log(error)
   }
 
   if (authToken?.role === "user") return null;

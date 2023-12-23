@@ -34,7 +34,7 @@ export function HeaderStudent({ data }: DataStudent) {
           info={data?.name || "User"}
           className="capitalize"
         />
-        <StatsInfo span="Idade" info={String(data?.age)} />
+        <StatsInfo span="Idade" info={String(data?.age) ?? "Não informado"} />
         <StatsInfo span="Email" info={data?.email || "Não definido"} />
         <StatsInfo span="Sexo" info={data?.gender || "Não definido"} />
         <StatsInfo

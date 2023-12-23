@@ -72,7 +72,7 @@ export function Profile() {
         const response = await api.get(`student/${authToken?.id}`);
         setData(response.data);
       } else {
-        const response = await api.get(`teacher/${authToken?.id}`);
+        const response = await api.get(`teachers/${authToken?.id}`);
         setData(response.data);
       }
     } catch (error) {
@@ -109,7 +109,7 @@ export function Profile() {
         api.put(`student/${authToken?.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       } else {
-        api.put(`teacher/${authToken?.id}`, filterData);
+        api.put(`teachers/${authToken?.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       }
     } catch (error) {

@@ -6,3 +6,8 @@ export const api = axios.create({
 })
 
 //withCredentials, permite que as solicições HTTP recebam headers com os cookies
+
+// api.interceptors.request.use(config => {
+//   config.withCredentials = true;
+//   return config;
+// });
