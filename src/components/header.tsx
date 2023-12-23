@@ -16,7 +16,7 @@ export function Header({ id, role }: HeaderPage) {
   const [data, setData] = useState<UserData[] | null>()
 
   useEffect(() => {
-    if(role === "teacher") {
+    if(role === "admin") {
     api.get(`/teachers`)
       .then(response => setData(response.data))
       .catch(error => console.log(error))
