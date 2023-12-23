@@ -1,6 +1,7 @@
-import { useAuthTokenContext } from "@/hooks/useAuthToken";
-import { useFetch } from "@/hooks/useFetch";
+import { useEffect, useState } from "react";
+import { api } from "@/services/api";
 import { Link } from "react-router-dom";
+import { useAuthTokenContext } from "@/hooks/useAuthToken";
 
 import { weekdays } from "@/components/workout-card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,8 +10,26 @@ import { Workouts } from "@/types/workout.types";
 
 export function Workout() {
   const { authToken } = useAuthTokenContext();
+  const [data, setData] = useState<Workouts[] | null>(null)
+  const [error, setError] = useState<any>(null)
+  const [loading, setLoading] = useState(false)
 
-  const { data, error, loading } = useFetch<Workouts[]>(`workouts/${authToken?.id}`)
+  useEffect(() => {
+    if(!authToken) {
+      return
+    }
+    try {
+      setLoading(true)
+      api.get(`workouts/${authToken?.id}`)
+      .then(response => setData(response.data))
+    }catch(error: any) {
+      setError(error)
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+    
+  },[authToken])
   
   if (authToken?.role === "teacher") {
     return (

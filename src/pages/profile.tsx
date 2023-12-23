@@ -81,6 +81,10 @@ export function Profile() {
   };
 
   useEffect(() => {
+    if(!authToken) {
+      return 
+    }
+    
     fetchData();
   }, [authToken, loading]);
 

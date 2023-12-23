@@ -44,6 +44,14 @@ export function InvitePage() {
     },
   });
 
+  if(!authToken) {
+    return (
+      <div>
+        Carregando
+      </div>
+    )
+  }
+
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       if (role === "user") {
