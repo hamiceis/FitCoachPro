@@ -32,10 +32,6 @@ export function DashboardPage() {
         console.log("Não foi possível acessar seus dados", error)
       }
     }
-
-    if(authToken?.role === "user") {
-      navigate("/dashboard/workouts")
-    }
   }, [auth]);
 
 

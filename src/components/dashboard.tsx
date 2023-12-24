@@ -11,12 +11,14 @@ import { StudentData, StudentProps } from "@/types/student.types";
 import { useUsersStore } from "@/hooks/useUsers";
 
 import { useAuthTokenContext } from "@/hooks/useAuthToken";
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
   const [search, setSearch] = useState<string>("");
 
   const { authToken } = useAuthTokenContext();
   const { setUsers } = useUsersStore();
+  const navigate = useNavigate()
 
   const { data, loading, error } = useFetch<StudentData[]>(`teacher/students`);
   //UseEffect garante que os dados, sejam aguardados e passados para dentro do contexto do Zustand
@@ -35,7 +37,9 @@ export function Dashboard() {
     console.log(error)
   }
 
-  if (authToken?.role === "user") return null;
+  if(authToken?.role === "user") {
+    navigate("/dashboard/workouts")
+  }
 
   return (
     <div className="w-full py-2 flex flex-col space-y-4">
