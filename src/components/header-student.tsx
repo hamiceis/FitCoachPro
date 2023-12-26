@@ -1,12 +1,13 @@
 import { StatsInfo } from "./stats-info";
 import { Button } from "@/components/ui/button";
+import { FormDetailsUser } from "@/components/form-details-user";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DataStudent } from "@/types/student.types";
 import { format } from "date-fns";
 import { formatTel } from "@/lib/formatTel";
 
-export function HeaderStudent({ data }: DataStudent) {
+export function HeaderStudent({ data, setForceRender }: DataStudent) {
   const navigate = useNavigate();
   const imageSrc = data?.gender === "F" ? "/woman-vetor.jpg" : "/man-vetor.jpg";
 
@@ -66,6 +67,7 @@ export function HeaderStudent({ data }: DataStudent) {
           }
         />
       </div>
+      <FormDetailsUser studentId={data?.id}  forceRender={setForceRender} />
     </header>
   );
 }

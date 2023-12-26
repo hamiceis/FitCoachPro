@@ -59,11 +59,11 @@ export function StudentPage() {
   return (
     <div className="min-h-screen w-full bg-zinc-600">
       <div className="hidden md:block">
-        <HeaderStudent data={user} />
+        <HeaderStudent data={user} setForceRender={setForceRender} />
       </div>
 
       <StudentSidebar>
-        <HeaderStudent data={user} />
+        <HeaderStudent data={user} setForceRender={setForceRender} />
       </StudentSidebar>
 
       <main className="h-full py-4 px-4">

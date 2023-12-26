@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface StudentProps {
   id: string;
   name: string;
@@ -26,4 +28,5 @@ export interface StudentData {
 
 export interface DataStudent {
   data?: StudentData
+  setForceRender: Dispatch<SetStateAction<boolean>>
 }

@@ -1,8 +1,10 @@
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 
 import { toast } from "react-toastify";
+import { api } from "@/services/api";
 
 import {
   Dialog,
@@ -21,14 +23,11 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+
 import { Exercises } from "@/types/exercise.type";
-import { api } from "@/services/api";
 
 const formSchema = z.object({
   name_exercise: z.string().min(1, {

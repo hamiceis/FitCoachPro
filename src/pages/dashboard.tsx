@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie"
+import { useAuthStore } from "@/hooks/useAuth"
 
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
@@ -7,10 +10,6 @@ import { Sidebar } from "@/components/sidebar";
 import { AuthTokenProps } from "@/types/authToken.types";
 import { ContextType } from "@/types/OutletContextType.types";
 
-import Cookies from "js-cookie"
-
-import { toast } from "react-toastify";
-import { useAuthStore } from "@/hooks/useAuth"
 
 export function DashboardPage() {
   const [authToken, setAuthToken] = useState<AuthTokenProps | null>(null);
@@ -18,8 +17,8 @@ export function DashboardPage() {
 
   const navigate = useNavigate()
   const auth = Cookies.get("authToken")
- 
   useEffect(() => {
+
     if (!auth) {
       navigate("/login")
       toast.error("Usuário não logado")
@@ -32,8 +31,9 @@ export function DashboardPage() {
         console.log("Não foi possível acessar seus dados", error)
       }
     }
-  }, [auth]);
 
+ 
+  }, [auth]);
 
   return (
     <div className="h-screen w-full flex">
