@@ -41,10 +41,12 @@ import { api } from "@/services/api";
 type FormData = {
   weight?: string;
   imc?: number;
-  date_start_protocol?: Date;
-  date_end_protocol?: Date;
+  protocol_start_date?: Date;
+  protocol_end_date?: Date;
   goal?: string;
-  level?: string;
+  conditioning_level?: number;
+  training_level?: string;
+  weekly_Frequency?: string;
   [key: string]: string | number | Date | undefined;
 };
 
@@ -53,8 +55,8 @@ const formSchema = z.object({
   imc: z.string().optional(),
   conditioning_level: z.string().optional(),
   goal: z.string().optional(),
-  date_start_protocol: z.date().optional(),
-  date_end_protocol: z.date().optional(),
+  protocol_start_date: z.date().optional(),
+  protocol_end_date: z.date().optional(),
 });
 
 interface FormWorkoutProps {
@@ -72,24 +74,25 @@ export function FormDetailsUser({ studentId, forceRender }: FormWorkoutProps) {
       goal: "",
       imc: "",
       conditioning_level: "",
-      date_end_protocol: new Date(),
-      date_start_protocol: new Date(),
+      protocol_end_date: new Date(),
+      protocol_start_date: new Date(),
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     let data: FormData = {};
     for (let [key, value] of Object.entries(values)) {
-      if (key === "date_start_protocol" || key === "date_end_protocol") {
+      if (key === "protocol_start_date" || key === "protocol_end_date") {
         data[key as string] = (value as Date).toISOString();
+      } if (key === "conditioning_level") {
+        data[key] = Number(value)
       } else {
         data[key] = value;
       }
     }
 
     try {
-      // await api.post(`/workout/${studentId}`, data);
-      console.log(data);
+      await api.patch(`/teacher/student/${studentId}`, data);
       toast.success("Informações adicionais alterada");
       form.reset();
     } catch (error: any) {
@@ -202,7 +205,7 @@ export function FormDetailsUser({ studentId, forceRender }: FormWorkoutProps) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
-                      name="date_start_protocol"
+                      name="protocol_start_date"
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel>
@@ -247,7 +250,7 @@ export function FormDetailsUser({ studentId, forceRender }: FormWorkoutProps) {
 
                     <FormField
                       control={form.control}
-                      name="date_end_protocol"
+                      name="protocol_end_date"
                       render={({ field }) => (
                         <FormItem className="flex flex-col gap-2">
                           <FormLabel>
