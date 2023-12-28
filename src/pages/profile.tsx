@@ -106,10 +106,10 @@ export function Profile() {
 
     try {
       if (role === "user") {
-        api.put(`student/${authToken?.id}`, filterData);
+        await api.put(`student/${authToken?.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       } else {
-        api.put(`teachers/${authToken?.id}`, filterData);
+       await api.put(`teacher/${authToken?.id}`, filterData);
         toast.success("Dados atualizados com sucesso!");
       }
     } catch (error) {

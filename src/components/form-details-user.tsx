@@ -37,6 +37,13 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
 import { api } from "@/services/api";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type FormData = {
   weight?: string;
@@ -64,6 +71,8 @@ interface FormWorkoutProps {
   forceRender: Dispatch<SetStateAction<boolean>>;
 }
 
+const levels = ["Iniciante", "Intermédio", "Avançado"];
+
 export function FormDetailsUser({ studentId, forceRender }: FormWorkoutProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -84,8 +93,9 @@ export function FormDetailsUser({ studentId, forceRender }: FormWorkoutProps) {
     for (let [key, value] of Object.entries(values)) {
       if (key === "protocol_start_date" || key === "protocol_end_date") {
         data[key as string] = (value as Date).toISOString();
-      } if (key === "conditioning_level") {
-        data[key] = Number(value)
+      }
+      if (key === "conditioning_level") {
+        data[key] = Number(value);
       } else {
         data[key] = value;
       }
@@ -191,11 +201,32 @@ export function FormDetailsUser({ studentId, forceRender }: FormWorkoutProps) {
                       control={form.control}
                       name="conditioning_level"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Nivel de treinamento</FormLabel>
-                          <FormControl>
-                            <Input placeholder="iniciante" {...field} />
-                          </FormControl>
+                        <FormItem className="w-full">
+                          <FormLabel>Nivel de condicionamento</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  defaultValue={field.value}
+                                  placeholder="Selecione o tipo de condicionamento"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {levels.map((type, index) => (
+                                <SelectItem
+                                  key={type + index}
+                                  value={String(index)}
+                                >
+                                  {type}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}

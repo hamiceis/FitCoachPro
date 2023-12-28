@@ -7,6 +7,14 @@ import { DataStudent } from "@/types/student.types";
 import { format } from "date-fns";
 import { formatTel } from "@/lib/formatTel";
 
+
+const conditioning: Record<number, string> = {
+  0: "Iniciante",
+  1: "Intermédio",
+  2: "Avançado"
+}
+
+
 export function HeaderStudent({ data, setForceRender }: DataStudent) {
   const navigate = useNavigate();
   const imageSrc = data?.gender === "F" ? "/woman-vetor.jpg" : "/man-vetor.jpg";
@@ -47,7 +55,8 @@ export function HeaderStudent({ data, setForceRender }: DataStudent) {
         <StatsInfo span="IMC" info={String(data?.imc ?? "Não definido")} />
         <StatsInfo
           span="Nivel de treinamento"
-          info={data?.conditioning_level || "Não definido"}
+          info={(data && data.conditioning_level !== undefined) ? conditioning[Number(data.conditioning_level)] : "Não definido"}
+
         />
         <StatsInfo span="Meta" info={data?.goal || "Não definido"} />
         <StatsInfo
